@@ -47,7 +47,7 @@ namespace IT7536_FinalAssessment_20200344
                         + currentFileLine.ToString(), "Warning Invalid Location");
                     continue;
                 }
-
+                string location = values[2];
                 // value[3] is the storage racks horizontal allocation and requires to be at least 1
                 if (values[3] == null || int.Parse(values[3]) <= 1)
                 {
@@ -55,7 +55,7 @@ namespace IT7536_FinalAssessment_20200344
                         + currentFileLine.ToString(), "Warning Invalid Horizontal Allocation");
                     continue;
                 }
-
+                int horizontalAllocation = int.Parse(values[3]);
                 // values[4] is the storage racks vertical allocation and requires to be at least 1
                 if (values[4] == null || int.Parse(values[4]) <= 1)
                 {
@@ -63,7 +63,7 @@ namespace IT7536_FinalAssessment_20200344
                         + currentFileLine.ToString(), "Warning Invalid Vertical Allocation");
                     continue;
                 }
-
+                int verticalAllocation = int.Parse(values[4]);
                 // values[5] is the storage racks current state of full or not as it uses a boolean it will check to see if the value is null
                 // and a gettype
                 if(values[5] == null || !(bool.Parse(values[5]) == true || bool.Parse(values[5]) == false))
@@ -72,7 +72,7 @@ namespace IT7536_FinalAssessment_20200344
                         + currentFileLine.ToString(), "Warning Invalid Full allotment");
                     continue;
                 }
-
+                bool full = bool.Parse(values[5]);
                 // values[6] is the storage racks _allotedProductType and should hold a string value
                 if (values[6] == null || values[6] == "")
                 {
@@ -80,7 +80,7 @@ namespace IT7536_FinalAssessment_20200344
                         + currentFileLine.ToString(), "Warning Invalid Product Type");
                     continue;
                 }
-
+                string productType = values[6];
                 // values[7] is a double and will require to be larger than a min height
                 if (double.TryParse(values[7], out double height) || height < _rackMinHeight)
                 {
@@ -88,6 +88,9 @@ namespace IT7536_FinalAssessment_20200344
                         + currentFileLine.ToString(), "Warning Invalid Rack Height");
                     continue;
                 }
+                // TODO create method to turn string into list for values[1]
+                var storageRack = StorageRack.CreateStorage(id, null, location, horizontalAllocation, verticalAllocation, full, productType, height);
+
             }
             csvTextFieldParser.Close();
         }
