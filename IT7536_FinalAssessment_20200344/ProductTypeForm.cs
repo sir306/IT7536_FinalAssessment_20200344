@@ -93,16 +93,17 @@ namespace IT7536_FinalAssessment_20200344
         /// <param name="productType">The new product type being added to the end of the file</param>
         private void SaveToProductTypeFile(ProductType productType)
         {
+            string contents;
             var lines = File.ReadAllLines(path + _productTypeFile);
             if (lines.Length == 0)
             {
-                string contents = productType.ProductName;
+                contents = productType.ProductName;
                 File.AppendAllText((path + _productTypeFile), contents);
 
             }
             else
             {
-                string contents = Environment.NewLine + productType.ProductName;
+                contents = Environment.NewLine + productType.ProductName;
                 File.AppendAllText((path + _productTypeFile), contents);
             }
         }
@@ -192,7 +193,7 @@ namespace IT7536_FinalAssessment_20200344
         }
 
         /// <summary>
-        /// This will Load All Product Types into the combo box on the new pallet tab under PalletProduct tab
+        /// This will Load All Product Types into the combo box on the new pallet tab under PalletProduct tab and create Storage Rack tab
         /// </summary>
         private void LoadProductTypes()
         {
@@ -207,6 +208,7 @@ namespace IT7536_FinalAssessment_20200344
                 foreach (var item in productTypes)
                 {
                     newPalletProdTypecomboBox.Items.Add(item.ProductName);
+                    newStorageRackProductTypecomboBox.Items.Add(item.ProductName);
                 }
                 newPalletProdTypecomboBox.Text = "Select the Pallets Product Type..";
             }

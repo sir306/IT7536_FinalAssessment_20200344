@@ -63,10 +63,32 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.deleteButton = new System.Windows.Forms.Button();
+            this.viewRackButton = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.currentStorageRackTitleLabel = new System.Windows.Forms.Label();
             this.currentStorageRackDataGridView = new System.Windows.Forms.DataGridView();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.newStorageRackHelpLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.clearNewStorageRackButton = new System.Windows.Forms.Button();
+            this.createNewStorageRackButton = new System.Windows.Forms.Button();
+            this.newRackHeightNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.newRackHeightLabel = new System.Windows.Forms.Label();
+            this.newStorageRackProductTypecomboBox = new System.Windows.Forms.ComboBox();
+            this.newAllocatedProductStorageRackLabel = new System.Windows.Forms.Label();
+            this.newAllocatedStorageSlotsNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.newVerticalAllocationNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.newVerticalAllocationLabel = new System.Windows.Forms.Label();
+            this.newHorizontalAllocationNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.newHorizontalAllocationLabel = new System.Windows.Forms.Label();
+            this.newStorageRackLocationTextBox = new System.Windows.Forms.TextBox();
+            this.newStorageRackLocationLabel = new System.Windows.Forms.Label();
+            this.newAllocatedRackSlotsLabel = new System.Windows.Forms.Label();
+            this.newStorageRackIDTextBox = new System.Windows.Forms.TextBox();
+            this.newStorageRackIDLabel = new System.Windows.Forms.Label();
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,9 +98,6 @@
             this.saveToSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.label5 = new System.Windows.Forms.Label();
-            this.viewRackButton = new System.Windows.Forms.Button();
-            this.deleteButton = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -91,6 +110,11 @@
             this.tabControl3.SuspendLayout();
             this.tabPage7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentStorageRackDataGridView)).BeginInit();
+            this.tabPage8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.newRackHeightNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newAllocatedStorageSlotsNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newVerticalAllocationNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newHorizontalAllocationNumericUpDown)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -486,6 +510,38 @@
             this.tabPage7.Text = "Current Storage Racks";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
+            // deleteButton
+            // 
+            this.deleteButton.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.deleteButton.Location = new System.Drawing.Point(6, 369);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(82, 29);
+            this.deleteButton.TabIndex = 5;
+            this.deleteButton.Text = "Delete";
+            this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.DeleteButton_Click);
+            // 
+            // viewRackButton
+            // 
+            this.viewRackButton.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.viewRackButton.Location = new System.Drawing.Point(405, 369);
+            this.viewRackButton.Name = "viewRackButton";
+            this.viewRackButton.Size = new System.Drawing.Size(82, 29);
+            this.viewRackButton.TabIndex = 4;
+            this.viewRackButton.Text = "View";
+            this.viewRackButton.UseVisualStyleBackColor = true;
+            this.viewRackButton.Click += new System.EventHandler(this.ViewRackButton_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label5.Location = new System.Drawing.Point(6, 332);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(229, 13);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Click Delete to remove it provided its empty";
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -508,17 +564,39 @@
             // 
             // currentStorageRackDataGridView
             // 
+            this.currentStorageRackDataGridView.AllowUserToAddRows = false;
+            this.currentStorageRackDataGridView.AllowUserToDeleteRows = false;
             this.currentStorageRackDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.currentStorageRackDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.currentStorageRackDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.currentStorageRackDataGridView.Location = new System.Drawing.Point(6, 25);
             this.currentStorageRackDataGridView.MultiSelect = false;
             this.currentStorageRackDataGridView.Name = "currentStorageRackDataGridView";
             this.currentStorageRackDataGridView.RowTemplate.Height = 25;
             this.currentStorageRackDataGridView.Size = new System.Drawing.Size(481, 291);
             this.currentStorageRackDataGridView.TabIndex = 0;
+            this.currentStorageRackDataGridView.Click += new System.EventHandler(this.CurrentStorageRacksDataGridView_Click);
             // 
             // tabPage8
             // 
+            this.tabPage8.Controls.Add(this.newStorageRackHelpLinkLabel);
+            this.tabPage8.Controls.Add(this.label7);
+            this.tabPage8.Controls.Add(this.label6);
+            this.tabPage8.Controls.Add(this.clearNewStorageRackButton);
+            this.tabPage8.Controls.Add(this.createNewStorageRackButton);
+            this.tabPage8.Controls.Add(this.newRackHeightNumericUpDown);
+            this.tabPage8.Controls.Add(this.newRackHeightLabel);
+            this.tabPage8.Controls.Add(this.newStorageRackProductTypecomboBox);
+            this.tabPage8.Controls.Add(this.newAllocatedProductStorageRackLabel);
+            this.tabPage8.Controls.Add(this.newAllocatedStorageSlotsNumericUpDown);
+            this.tabPage8.Controls.Add(this.newVerticalAllocationNumericUpDown);
+            this.tabPage8.Controls.Add(this.newVerticalAllocationLabel);
+            this.tabPage8.Controls.Add(this.newHorizontalAllocationNumericUpDown);
+            this.tabPage8.Controls.Add(this.newHorizontalAllocationLabel);
+            this.tabPage8.Controls.Add(this.newStorageRackLocationTextBox);
+            this.tabPage8.Controls.Add(this.newStorageRackLocationLabel);
+            this.tabPage8.Controls.Add(this.newAllocatedRackSlotsLabel);
+            this.tabPage8.Controls.Add(this.newStorageRackIDTextBox);
+            this.tabPage8.Controls.Add(this.newStorageRackIDLabel);
             this.tabPage8.Location = new System.Drawing.Point(4, 24);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
@@ -526,6 +604,236 @@
             this.tabPage8.TabIndex = 1;
             this.tabPage8.Text = "Create Storage Rack";
             this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // newStorageRackHelpLinkLabel
+            // 
+            this.newStorageRackHelpLinkLabel.AutoSize = true;
+            this.newStorageRackHelpLinkLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.newStorageRackHelpLinkLabel.Location = new System.Drawing.Point(450, 8);
+            this.newStorageRackHelpLinkLabel.Name = "newStorageRackHelpLinkLabel";
+            this.newStorageRackHelpLinkLabel.Size = new System.Drawing.Size(37, 19);
+            this.newStorageRackHelpLinkLabel.TabIndex = 25;
+            this.newStorageRackHelpLinkLabel.TabStop = true;
+            this.newStorageRackHelpLinkLabel.Text = "Help";
+            this.newStorageRackHelpLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.NewStorageRackHelpLinkLabel_LinkClicked);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label7.Location = new System.Drawing.Point(42, 21);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(316, 13);
+            this.label7.TabIndex = 24;
+            this.label7.Text = "click \'Clear\' to reset form or click \'Help\' for more information";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label6.Location = new System.Drawing.Point(42, 8);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(338, 13);
+            this.label6.TabIndex = 23;
+            this.label6.Text = "Fill in the form and click \'Create\' to create a new StorageRack or ";
+            // 
+            // clearNewStorageRackButton
+            // 
+            this.clearNewStorageRackButton.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.clearNewStorageRackButton.Location = new System.Drawing.Point(42, 368);
+            this.clearNewStorageRackButton.Name = "clearNewStorageRackButton";
+            this.clearNewStorageRackButton.Size = new System.Drawing.Size(95, 30);
+            this.clearNewStorageRackButton.TabIndex = 22;
+            this.clearNewStorageRackButton.Text = "Clear";
+            this.clearNewStorageRackButton.UseVisualStyleBackColor = true;
+            this.clearNewStorageRackButton.Click += new System.EventHandler(this.ClearNewStorageRackButton_Click);
+            // 
+            // createNewStorageRackButton
+            // 
+            this.createNewStorageRackButton.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.createNewStorageRackButton.Location = new System.Drawing.Point(356, 368);
+            this.createNewStorageRackButton.Name = "createNewStorageRackButton";
+            this.createNewStorageRackButton.Size = new System.Drawing.Size(95, 30);
+            this.createNewStorageRackButton.TabIndex = 21;
+            this.createNewStorageRackButton.Text = "Create";
+            this.createNewStorageRackButton.UseVisualStyleBackColor = true;
+            this.createNewStorageRackButton.Click += new System.EventHandler(this.CreateNewStorageRackButton_Click);
+            // 
+            // newRackHeightNumericUpDown
+            // 
+            this.newRackHeightNumericUpDown.DecimalPlaces = 2;
+            this.newRackHeightNumericUpDown.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.newRackHeightNumericUpDown.Location = new System.Drawing.Point(187, 321);
+            this.newRackHeightNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.newRackHeightNumericUpDown.Name = "newRackHeightNumericUpDown";
+            this.newRackHeightNumericUpDown.Size = new System.Drawing.Size(120, 25);
+            this.newRackHeightNumericUpDown.TabIndex = 20;
+            this.newRackHeightNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // newRackHeightLabel
+            // 
+            this.newRackHeightLabel.AutoSize = true;
+            this.newRackHeightLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.newRackHeightLabel.Location = new System.Drawing.Point(42, 323);
+            this.newRackHeightLabel.Name = "newRackHeightLabel";
+            this.newRackHeightLabel.Size = new System.Drawing.Size(121, 19);
+            this.newRackHeightLabel.TabIndex = 19;
+            this.newRackHeightLabel.Text = "Enter Rack Height:";
+            // 
+            // newStorageRackProductTypecomboBox
+            // 
+            this.newStorageRackProductTypecomboBox.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.newStorageRackProductTypecomboBox.FormattingEnabled = true;
+            this.newStorageRackProductTypecomboBox.Location = new System.Drawing.Point(42, 290);
+            this.newStorageRackProductTypecomboBox.Name = "newStorageRackProductTypecomboBox";
+            this.newStorageRackProductTypecomboBox.Size = new System.Drawing.Size(409, 25);
+            this.newStorageRackProductTypecomboBox.TabIndex = 18;
+            this.newStorageRackProductTypecomboBox.Text = "Select or Enter a new Product Type";
+            // 
+            // newAllocatedProductStorageRackLabel
+            // 
+            this.newAllocatedProductStorageRackLabel.AutoSize = true;
+            this.newAllocatedProductStorageRackLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.newAllocatedProductStorageRackLabel.Location = new System.Drawing.Point(42, 268);
+            this.newAllocatedProductStorageRackLabel.Name = "newAllocatedProductStorageRackLabel";
+            this.newAllocatedProductStorageRackLabel.Size = new System.Drawing.Size(144, 19);
+            this.newAllocatedProductStorageRackLabel.TabIndex = 17;
+            this.newAllocatedProductStorageRackLabel.Text = "Allocate Product Type:";
+            // 
+            // newAllocatedStorageSlotsNumericUpDown
+            // 
+            this.newAllocatedStorageSlotsNumericUpDown.Enabled = false;
+            this.newAllocatedStorageSlotsNumericUpDown.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.newAllocatedStorageSlotsNumericUpDown.InterceptArrowKeys = false;
+            this.newAllocatedStorageSlotsNumericUpDown.Location = new System.Drawing.Point(187, 105);
+            this.newAllocatedStorageSlotsNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.newAllocatedStorageSlotsNumericUpDown.Name = "newAllocatedStorageSlotsNumericUpDown";
+            this.newAllocatedStorageSlotsNumericUpDown.ReadOnly = true;
+            this.newAllocatedStorageSlotsNumericUpDown.Size = new System.Drawing.Size(120, 25);
+            this.newAllocatedStorageSlotsNumericUpDown.TabIndex = 16;
+            this.newAllocatedStorageSlotsNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // newVerticalAllocationNumericUpDown
+            // 
+            this.newVerticalAllocationNumericUpDown.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.newVerticalAllocationNumericUpDown.Location = new System.Drawing.Point(187, 233);
+            this.newVerticalAllocationNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.newVerticalAllocationNumericUpDown.Name = "newVerticalAllocationNumericUpDown";
+            this.newVerticalAllocationNumericUpDown.Size = new System.Drawing.Size(120, 25);
+            this.newVerticalAllocationNumericUpDown.TabIndex = 15;
+            this.newVerticalAllocationNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // newVerticalAllocationLabel
+            // 
+            this.newVerticalAllocationLabel.AutoSize = true;
+            this.newVerticalAllocationLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.newVerticalAllocationLabel.Location = new System.Drawing.Point(42, 235);
+            this.newVerticalAllocationLabel.Name = "newVerticalAllocationLabel";
+            this.newVerticalAllocationLabel.Size = new System.Drawing.Size(120, 19);
+            this.newVerticalAllocationLabel.TabIndex = 14;
+            this.newVerticalAllocationLabel.Text = "Vertical Allocation:";
+            // 
+            // newHorizontalAllocationNumericUpDown
+            // 
+            this.newHorizontalAllocationNumericUpDown.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.newHorizontalAllocationNumericUpDown.Location = new System.Drawing.Point(187, 201);
+            this.newHorizontalAllocationNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.newHorizontalAllocationNumericUpDown.Name = "newHorizontalAllocationNumericUpDown";
+            this.newHorizontalAllocationNumericUpDown.Size = new System.Drawing.Size(120, 25);
+            this.newHorizontalAllocationNumericUpDown.TabIndex = 13;
+            this.newHorizontalAllocationNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // newHorizontalAllocationLabel
+            // 
+            this.newHorizontalAllocationLabel.AutoSize = true;
+            this.newHorizontalAllocationLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.newHorizontalAllocationLabel.Location = new System.Drawing.Point(42, 203);
+            this.newHorizontalAllocationLabel.Name = "newHorizontalAllocationLabel";
+            this.newHorizontalAllocationLabel.Size = new System.Drawing.Size(139, 19);
+            this.newHorizontalAllocationLabel.TabIndex = 12;
+            this.newHorizontalAllocationLabel.Text = "Horizontal Allocation:";
+            // 
+            // newStorageRackLocationTextBox
+            // 
+            this.newStorageRackLocationTextBox.Location = new System.Drawing.Point(42, 172);
+            this.newStorageRackLocationTextBox.Name = "newStorageRackLocationTextBox";
+            this.newStorageRackLocationTextBox.Size = new System.Drawing.Size(409, 23);
+            this.newStorageRackLocationTextBox.TabIndex = 11;
+            this.newStorageRackLocationTextBox.Text = "Enter the Storage Rack\'s Location..";
+            // 
+            // newStorageRackLocationLabel
+            // 
+            this.newStorageRackLocationLabel.AutoSize = true;
+            this.newStorageRackLocationLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.newStorageRackLocationLabel.Location = new System.Drawing.Point(42, 150);
+            this.newStorageRackLocationLabel.Name = "newStorageRackLocationLabel";
+            this.newStorageRackLocationLabel.Size = new System.Drawing.Size(153, 19);
+            this.newStorageRackLocationLabel.TabIndex = 10;
+            this.newStorageRackLocationLabel.Text = "Storage Racks Location:";
+            // 
+            // newAllocatedRackSlotsLabel
+            // 
+            this.newAllocatedRackSlotsLabel.AutoSize = true;
+            this.newAllocatedRackSlotsLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.newAllocatedRackSlotsLabel.Location = new System.Drawing.Point(42, 107);
+            this.newAllocatedRackSlotsLabel.Name = "newAllocatedRackSlotsLabel";
+            this.newAllocatedRackSlotsLabel.Size = new System.Drawing.Size(101, 19);
+            this.newAllocatedRackSlotsLabel.TabIndex = 8;
+            this.newAllocatedRackSlotsLabel.Text = "Allocated Slots:";
+            // 
+            // newStorageRackIDTextBox
+            // 
+            this.newStorageRackIDTextBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.newStorageRackIDTextBox.Enabled = false;
+            this.newStorageRackIDTextBox.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.newStorageRackIDTextBox.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.newStorageRackIDTextBox.Location = new System.Drawing.Point(42, 74);
+            this.newStorageRackIDTextBox.Name = "newStorageRackIDTextBox";
+            this.newStorageRackIDTextBox.ReadOnly = true;
+            this.newStorageRackIDTextBox.Size = new System.Drawing.Size(409, 25);
+            this.newStorageRackIDTextBox.TabIndex = 7;
+            // 
+            // newStorageRackIDLabel
+            // 
+            this.newStorageRackIDLabel.AutoSize = true;
+            this.newStorageRackIDLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.newStorageRackIDLabel.Location = new System.Drawing.Point(42, 52);
+            this.newStorageRackIDLabel.Name = "newStorageRackIDLabel";
+            this.newStorageRackIDLabel.Size = new System.Drawing.Size(140, 19);
+            this.newStorageRackIDLabel.TabIndex = 0;
+            this.newStorageRackIDLabel.Text = "New Storage Rack ID:";
             // 
             // tabPage9
             // 
@@ -587,36 +895,6 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label5.Location = new System.Drawing.Point(6, 332);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(229, 13);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Click Delete to remove it provided its empty";
-            // 
-            // viewRackButton
-            // 
-            this.viewRackButton.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.viewRackButton.Location = new System.Drawing.Point(405, 369);
-            this.viewRackButton.Name = "viewRackButton";
-            this.viewRackButton.Size = new System.Drawing.Size(82, 29);
-            this.viewRackButton.TabIndex = 4;
-            this.viewRackButton.Text = "View";
-            this.viewRackButton.UseVisualStyleBackColor = true;
-            // 
-            // deleteButton
-            // 
-            this.deleteButton.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.deleteButton.Location = new System.Drawing.Point(6, 369);
-            this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(82, 29);
-            this.deleteButton.TabIndex = 5;
-            this.deleteButton.Text = "Delete";
-            this.deleteButton.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -643,6 +921,12 @@
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.currentStorageRackDataGridView)).EndInit();
+            this.tabPage8.ResumeLayout(false);
+            this.tabPage8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.newRackHeightNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newAllocatedStorageSlotsNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newVerticalAllocationNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newHorizontalAllocationNumericUpDown)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -704,5 +988,24 @@
         private Label label5;
         private Button deleteButton;
         private Button viewRackButton;
+        private Label newStorageRackIDLabel;
+        private Label newAllocatedRackSlotsLabel;
+        private TextBox newStorageRackIDTextBox;
+        private Label newStorageRackLocationLabel;
+        private TextBox newStorageRackLocationTextBox;
+        private Label newHorizontalAllocationLabel;
+        private NumericUpDown newAllocatedStorageSlotsNumericUpDown;
+        private NumericUpDown newVerticalAllocationNumericUpDown;
+        private Label newVerticalAllocationLabel;
+        private NumericUpDown newHorizontalAllocationNumericUpDown;
+        private ComboBox newStorageRackProductTypecomboBox;
+        private Label newAllocatedProductStorageRackLabel;
+        private NumericUpDown newRackHeightNumericUpDown;
+        private Label newRackHeightLabel;
+        private Button clearNewStorageRackButton;
+        private Button createNewStorageRackButton;
+        private Label label7;
+        private Label label6;
+        private LinkLabel newStorageRackHelpLinkLabel;
     }
 }

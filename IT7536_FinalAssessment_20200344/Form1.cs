@@ -21,6 +21,14 @@ namespace IT7536_FinalAssessment_20200344
         /// </summary>
         private string _storageRackFile = "\\storageRacks.csv";
         /// <summary>
+        /// Holds all the slots in relation to the storage rack
+        /// </summary>
+        private string _storageRackSlotFile = "\\storageRackSlots.csv";
+        /// <summary>
+        /// This file holds the complete information about a slot
+        /// </summary>
+        private string _slots = "\\slots.csv";
+        /// <summary>
         /// A Filestream property used for creating, editing
         /// </summary>
         private FileStream? fileStream;
@@ -70,6 +78,9 @@ namespace IT7536_FinalAssessment_20200344
             // clear selected values
             nonAllocatedPalletsDataGridView.ClearSelection();
             allocatedPalletsDataGridView.ClearSelection();
+            currentStorageRackDataGridView.ClearSelection();
+            // set forms min rack height on the create new storage rack tab
+            newRackHeightNumericUpDown.Minimum = new decimal(_rackMinHeight); 
         }
 
         /// <summary>
@@ -95,6 +106,18 @@ namespace IT7536_FinalAssessment_20200344
                 fileStream = File.Create(path +_storageRackFile);
                 fileStream.Close();
             }
+            // check if storage rack slot file exists
+            if (!File.Exists(path + _storageRackSlotFile))
+            {
+                fileStream = File.Create(path + _storageRackSlotFile);
+                fileStream.Close();
+            }
+            // check if slots file exists
+            if (!File.Exists(path + _slots))
+            {
+                fileStream = File.Create(path + _slots);
+                fileStream.Close();
+            }
         }
 
         /// <summary>
@@ -107,6 +130,19 @@ namespace IT7536_FinalAssessment_20200344
             if (productPallets.Count > 0) CreatePalletDataGrid(allocatedPalletsDataGridView, productPallets);
             if (nonAllocatedPallets.Count > 0) CreatePalletDataGrid(nonAllocatedPalletsDataGridView, nonAllocatedPallets);
             ReadStorageRackFile();
+            if (storageRacks.Count > 0) CreateStorageRackDataGrid();
         }
+
+        private void ViewRackButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

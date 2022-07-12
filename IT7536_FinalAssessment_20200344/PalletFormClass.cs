@@ -13,6 +13,8 @@ namespace IT7536_FinalAssessment_20200344
     public partial class Form1 : Form
     {
 
+        private const string _palletHeightInputDefault = "Enter the Pallet in Centimeters..";
+
         /// <summary>
         /// Read productPalletFile for the program and create objects for there respective classes and append it to the form where needed
         /// </summary>
@@ -72,7 +74,7 @@ namespace IT7536_FinalAssessment_20200344
         /// <param name="e">The event that triggered the event</param>
         public void PalletHeightTextBoxClicked(object sender, EventArgs e)
         {
-            if (newPalletHeightTextBox.Text == "Enter the Pallet in Centimeters..")
+            if (newPalletHeightTextBox.Text == _palletHeightInputDefault)
             {
                 newPalletHeightTextBox.Text = "";
             }
@@ -98,18 +100,18 @@ namespace IT7536_FinalAssessment_20200344
         private bool PalletHeightInputValid(TextBox textBox)
         {
             string? text = textBox.Text;
-            text.TrimEnd();
-            text.TrimStart();
+            text = text.TrimEnd();
+            text = text.TrimStart();
             // is text empty
             if (text == "")
             {
-                textBox.Text = "Enter the Pallet in Centimeters..";
+                textBox.Text = _palletHeightInputDefault;
                 return false;
             }
             // is text not numeric or is the value less than min height
             else if (!double.TryParse(text, out double height) | height <= _minHeight)
             {
-                textBox.Text = "Enter the Pallet in Centimeters..";
+                textBox.Text = _palletHeightInputDefault;
                 MessageBox.Show("You must enter a valid height with numeric values larger than: " + _minHeight.ToString(), "Input Error");
                 return false;
             }
