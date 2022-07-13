@@ -12,9 +12,9 @@ namespace IT7536_FinalAssessment_20200344
         private const string _newRackLocationDefault = "Enter the Storage Rack's Location..";
         private const string _newRackProductTypeDefault = "Select or Enter a new Product Type";
 
-        private void CreateEventBindings()
+        private void AllocationRecalculate(object sender, EventArgs e)
         {
-
+            newAllocatedStorageSlotsNumericUpDown.Value = newHorizontalAllocationNumericUpDown.Value * newVerticalAllocationNumericUpDown.Value;
         }
 
         private void CreateNewStorageRackButton_Click(object sender, EventArgs e)
@@ -32,7 +32,7 @@ namespace IT7536_FinalAssessment_20200344
                 double rackHeight;
 
                 id = int.Parse(newStorageRackIDTextBox.Text);
-                
+
                 locatation = newStorageRackLocationTextBox.Text;
                 horizontalAllocation = (int)newHorizontalAllocationNumericUpDown.Value;
                 verticalAllocation = (int)newVerticalAllocationNumericUpDown.Value;
@@ -41,7 +41,7 @@ namespace IT7536_FinalAssessment_20200344
 
                 int amount = verticalAllocation * horizontalAllocation;
                 int storageSlotsId = CreateStorageSlots(amount, rackHeight, locatation, allocatedProductType);
-                if(storageSlotsId != -1)
+                if (storageSlotsId != -1)
                 {
                     allocatedSlots = GetStorageRackSlots(storageSlotsId);
                     if (allocatedSlots == null)
@@ -62,13 +62,20 @@ namespace IT7536_FinalAssessment_20200344
                     storageRacks.Add(storageRack);
                     CreateStorageRackDataGrid();
                 }
-                
+
             }
         }
 
         private void ClearNewStorageRackButton_Click(object sender, EventArgs e)
         {
-
+            string racksLocation = "Enter the Storage Rack's Location..";
+            string rackProductType = "Select or Enter a new Product Type";
+            newStorageRackLocationTextBox.Text = racksLocation;
+            newHorizontalAllocationNumericUpDown.Value = 1;
+            newVerticalAllocationNumericUpDown.Value = 1;
+            newStorageRackProductTypecomboBox.SelectedIndex = -1;
+            newStorageRackProductTypecomboBox.Text = rackProductType;
+            newRackHeightNumericUpDown.Value = (decimal)_rackMinHeight;
         }
 
         private void NewStorageRackHelpLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -135,7 +142,7 @@ namespace IT7536_FinalAssessment_20200344
                 throw new Exception("An error occured with storageSlotTextFieldParser");
             }
             textFieldParser.SetDelimiters(new string[] { "," }); // set Delimiter params for TextFieldParser
-            
+
             string? tempFile = Path.GetTempFileName(); // create temp file
             StreamWriter streamWriter = new StreamWriter(tempFile); // create steamwriter for temp file
 

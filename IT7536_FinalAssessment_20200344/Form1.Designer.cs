@@ -60,6 +60,16 @@
             this.newPalletProdTypeLabel = new System.Windows.Forms.Label();
             this.newPalletProdTypecomboBox = new System.Windows.Forms.ComboBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.allocatePalletToSlotButton = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.searchAllocatePalletLabel = new System.Windows.Forms.Label();
+            this.searchButton = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.palletAllocationCheckBoxHelpTextLabel = new System.Windows.Forms.Label();
+            this.palletToBeAllocatedLabel = new System.Windows.Forms.Label();
+            this.palletSlotResultDataGridView = new System.Windows.Forms.DataGridView();
+            this.palletBeingAllocatedDataGridView = new System.Windows.Forms.DataGridView();
+            this.allocatePalletAnyRackCheckBox = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabPage7 = new System.Windows.Forms.TabPage();
@@ -90,6 +100,22 @@
             this.newStorageRackIDTextBox = new System.Windows.Forms.TextBox();
             this.newStorageRackIDLabel = new System.Windows.Forms.Label();
             this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.viewRackProductTypeTextBox = new System.Windows.Forms.TextBox();
+            this.viewRackHeightTextBox = new System.Windows.Forms.TextBox();
+            this.viewRackLocationTextBox = new System.Windows.Forms.TextBox();
+            this.viewRackFullTextBox = new System.Windows.Forms.TextBox();
+            this.viewRackHAllocationTextBox = new System.Windows.Forms.TextBox();
+            this.viewRackIDTextBox = new System.Windows.Forms.TextBox();
+            this.viewRackVAllocationTextBox = new System.Windows.Forms.TextBox();
+            this.viewRackAllocatedSlotsLabel = new System.Windows.Forms.Label();
+            this.viewRackAllocatedProdTypeLabel = new System.Windows.Forms.Label();
+            this.viewRackHeightLabel = new System.Windows.Forms.Label();
+            this.viewRackFullLabel = new System.Windows.Forms.Label();
+            this.viewRackVAllocationLabel = new System.Windows.Forms.Label();
+            this.viewRackHAllocationLabel = new System.Windows.Forms.Label();
+            this.viewRackLocationLabel = new System.Windows.Forms.Label();
+            this.viewRackIDLabel = new System.Windows.Forms.Label();
+            this.viewRackAllocatedSlotsDataGridView = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openExistingFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,6 +132,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.nonAllocatedPalletsDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.allocatedPalletsDataGridView)).BeginInit();
             this.tabPage5.SuspendLayout();
+            this.tabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.palletSlotResultDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.palletBeingAllocatedDataGridView)).BeginInit();
             this.tabPage3.SuspendLayout();
             this.tabControl3.SuspendLayout();
             this.tabPage7.SuspendLayout();
@@ -115,6 +144,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.newAllocatedStorageSlotsNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.newVerticalAllocationNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.newHorizontalAllocationNumericUpDown)).BeginInit();
+            this.tabPage9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.viewRackAllocatedSlotsDataGridView)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -464,6 +495,16 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.allocatePalletToSlotButton);
+            this.tabPage6.Controls.Add(this.label9);
+            this.tabPage6.Controls.Add(this.searchAllocatePalletLabel);
+            this.tabPage6.Controls.Add(this.searchButton);
+            this.tabPage6.Controls.Add(this.label8);
+            this.tabPage6.Controls.Add(this.palletAllocationCheckBoxHelpTextLabel);
+            this.tabPage6.Controls.Add(this.palletToBeAllocatedLabel);
+            this.tabPage6.Controls.Add(this.palletSlotResultDataGridView);
+            this.tabPage6.Controls.Add(this.palletBeingAllocatedDataGridView);
+            this.tabPage6.Controls.Add(this.allocatePalletAnyRackCheckBox);
             this.tabPage6.Location = new System.Drawing.Point(4, 24);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
@@ -471,6 +512,120 @@
             this.tabPage6.TabIndex = 2;
             this.tabPage6.Text = "Allocate Pallet";
             this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // allocatePalletToSlotButton
+            // 
+            this.allocatePalletToSlotButton.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.allocatePalletToSlotButton.Location = new System.Drawing.Point(172, 355);
+            this.allocatePalletToSlotButton.Name = "allocatePalletToSlotButton";
+            this.allocatePalletToSlotButton.Size = new System.Drawing.Size(150, 38);
+            this.allocatePalletToSlotButton.TabIndex = 9;
+            this.allocatePalletToSlotButton.Text = "Allocate Pallet";
+            this.allocatePalletToSlotButton.UseVisualStyleBackColor = true;
+            this.allocatePalletToSlotButton.Click += new System.EventHandler(this.allocatePalletToSlotButton_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
+            this.label9.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label9.Location = new System.Drawing.Point(3, 326);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(306, 13);
+            this.label9.TabIndex = 8;
+            this.label9.Text = "to allocate the pallet to and click \'Allocate Pallet\' to allocate it.";
+            // 
+            // searchAllocatePalletLabel
+            // 
+            this.searchAllocatePalletLabel.AutoSize = true;
+            this.searchAllocatePalletLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.searchAllocatePalletLabel.Location = new System.Drawing.Point(86, 121);
+            this.searchAllocatePalletLabel.Name = "searchAllocatePalletLabel";
+            this.searchAllocatePalletLabel.Size = new System.Drawing.Size(263, 19);
+            this.searchAllocatePalletLabel.TabIndex = 7;
+            this.searchAllocatePalletLabel.Text = "Click Search to find storage slots available";
+            // 
+            // searchButton
+            // 
+            this.searchButton.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.searchButton.Location = new System.Drawing.Point(365, 111);
+            this.searchButton.Name = "searchButton";
+            this.searchButton.Size = new System.Drawing.Size(75, 37);
+            this.searchButton.TabIndex = 6;
+            this.searchButton.Text = "Search";
+            this.searchButton.UseVisualStyleBackColor = true;
+            this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
+            this.label8.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.label8.Location = new System.Drawing.Point(3, 313);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(389, 13);
+            this.label8.TabIndex = 5;
+            this.label8.Text = "Disclaimer these results are in order of first found. Click the storage slot you " +
+    "wish ";
+            // 
+            // palletAllocationCheckBoxHelpTextLabel
+            // 
+            this.palletAllocationCheckBoxHelpTextLabel.AutoSize = true;
+            this.palletAllocationCheckBoxHelpTextLabel.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point);
+            this.palletAllocationCheckBoxHelpTextLabel.Location = new System.Drawing.Point(24, 97);
+            this.palletAllocationCheckBoxHelpTextLabel.Name = "palletAllocationCheckBoxHelpTextLabel";
+            this.palletAllocationCheckBoxHelpTextLabel.Size = new System.Drawing.Size(325, 13);
+            this.palletAllocationCheckBoxHelpTextLabel.TabIndex = 4;
+            this.palletAllocationCheckBoxHelpTextLabel.Text = "By checking this box you are returning results only of the same type.";
+            // 
+            // palletToBeAllocatedLabel
+            // 
+            this.palletToBeAllocatedLabel.AutoSize = true;
+            this.palletToBeAllocatedLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.palletToBeAllocatedLabel.Location = new System.Drawing.Point(6, 3);
+            this.palletToBeAllocatedLabel.Name = "palletToBeAllocatedLabel";
+            this.palletToBeAllocatedLabel.Size = new System.Drawing.Size(139, 19);
+            this.palletToBeAllocatedLabel.TabIndex = 3;
+            this.palletToBeAllocatedLabel.Text = "Pallet to be allocated:";
+            // 
+            // palletSlotResultDataGridView
+            // 
+            this.palletSlotResultDataGridView.AllowUserToAddRows = false;
+            this.palletSlotResultDataGridView.AllowUserToDeleteRows = false;
+            this.palletSlotResultDataGridView.AllowUserToOrderColumns = true;
+            this.palletSlotResultDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.palletSlotResultDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.palletSlotResultDataGridView.Location = new System.Drawing.Point(6, 160);
+            this.palletSlotResultDataGridView.MultiSelect = false;
+            this.palletSlotResultDataGridView.Name = "palletSlotResultDataGridView";
+            this.palletSlotResultDataGridView.ReadOnly = true;
+            this.palletSlotResultDataGridView.RowTemplate.Height = 25;
+            this.palletSlotResultDataGridView.Size = new System.Drawing.Size(477, 150);
+            this.palletSlotResultDataGridView.TabIndex = 2;
+            // 
+            // palletBeingAllocatedDataGridView
+            // 
+            this.palletBeingAllocatedDataGridView.AllowUserToAddRows = false;
+            this.palletBeingAllocatedDataGridView.AllowUserToDeleteRows = false;
+            this.palletBeingAllocatedDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.palletBeingAllocatedDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.palletBeingAllocatedDataGridView.Enabled = false;
+            this.palletBeingAllocatedDataGridView.Location = new System.Drawing.Point(6, 25);
+            this.palletBeingAllocatedDataGridView.Name = "palletBeingAllocatedDataGridView";
+            this.palletBeingAllocatedDataGridView.ReadOnly = true;
+            this.palletBeingAllocatedDataGridView.RowTemplate.Height = 25;
+            this.palletBeingAllocatedDataGridView.Size = new System.Drawing.Size(477, 48);
+            this.palletBeingAllocatedDataGridView.TabIndex = 1;
+            // 
+            // allocatePalletAnyRackCheckBox
+            // 
+            this.allocatePalletAnyRackCheckBox.AutoSize = true;
+            this.allocatePalletAnyRackCheckBox.Location = new System.Drawing.Point(6, 79);
+            this.allocatePalletAnyRackCheckBox.Name = "allocatePalletAnyRackCheckBox";
+            this.allocatePalletAnyRackCheckBox.Size = new System.Drawing.Size(434, 19);
+            this.allocatePalletAnyRackCheckBox.TabIndex = 0;
+            this.allocatePalletAnyRackCheckBox.Text = "Do you wish for the pallet to be allocated on a rack of the same product type?";
+            this.allocatePalletAnyRackCheckBox.UseVisualStyleBackColor = true;
             // 
             // tabPage3
             // 
@@ -663,7 +818,7 @@
             // 
             this.newRackHeightNumericUpDown.DecimalPlaces = 2;
             this.newRackHeightNumericUpDown.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.newRackHeightNumericUpDown.Location = new System.Drawing.Point(187, 321);
+            this.newRackHeightNumericUpDown.Location = new System.Drawing.Point(212, 321);
             this.newRackHeightNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -684,9 +839,9 @@
             this.newRackHeightLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.newRackHeightLabel.Location = new System.Drawing.Point(42, 323);
             this.newRackHeightLabel.Name = "newRackHeightLabel";
-            this.newRackHeightLabel.Size = new System.Drawing.Size(121, 19);
+            this.newRackHeightLabel.Size = new System.Drawing.Size(164, 19);
             this.newRackHeightLabel.TabIndex = 19;
-            this.newRackHeightLabel.Text = "Enter Rack Height:";
+            this.newRackHeightLabel.Text = "Enter Rack Height in cms:";
             // 
             // newStorageRackProductTypecomboBox
             // 
@@ -713,7 +868,7 @@
             this.newAllocatedStorageSlotsNumericUpDown.Enabled = false;
             this.newAllocatedStorageSlotsNumericUpDown.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.newAllocatedStorageSlotsNumericUpDown.InterceptArrowKeys = false;
-            this.newAllocatedStorageSlotsNumericUpDown.Location = new System.Drawing.Point(187, 105);
+            this.newAllocatedStorageSlotsNumericUpDown.Location = new System.Drawing.Point(212, 105);
             this.newAllocatedStorageSlotsNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -732,7 +887,7 @@
             // newVerticalAllocationNumericUpDown
             // 
             this.newVerticalAllocationNumericUpDown.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.newVerticalAllocationNumericUpDown.Location = new System.Drawing.Point(187, 233);
+            this.newVerticalAllocationNumericUpDown.Location = new System.Drawing.Point(212, 233);
             this.newVerticalAllocationNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -746,6 +901,7 @@
             0,
             0,
             0});
+            this.newVerticalAllocationNumericUpDown.ValueChanged += new System.EventHandler(this.AllocationRecalculate);
             // 
             // newVerticalAllocationLabel
             // 
@@ -760,7 +916,7 @@
             // newHorizontalAllocationNumericUpDown
             // 
             this.newHorizontalAllocationNumericUpDown.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.newHorizontalAllocationNumericUpDown.Location = new System.Drawing.Point(187, 201);
+            this.newHorizontalAllocationNumericUpDown.Location = new System.Drawing.Point(212, 201);
             this.newHorizontalAllocationNumericUpDown.Minimum = new decimal(new int[] {
             1,
             0,
@@ -774,6 +930,7 @@
             0,
             0,
             0});
+            this.newHorizontalAllocationNumericUpDown.ValueChanged += new System.EventHandler(this.AllocationRecalculate);
             // 
             // newHorizontalAllocationLabel
             // 
@@ -837,6 +994,22 @@
             // 
             // tabPage9
             // 
+            this.tabPage9.Controls.Add(this.viewRackProductTypeTextBox);
+            this.tabPage9.Controls.Add(this.viewRackHeightTextBox);
+            this.tabPage9.Controls.Add(this.viewRackLocationTextBox);
+            this.tabPage9.Controls.Add(this.viewRackFullTextBox);
+            this.tabPage9.Controls.Add(this.viewRackHAllocationTextBox);
+            this.tabPage9.Controls.Add(this.viewRackIDTextBox);
+            this.tabPage9.Controls.Add(this.viewRackVAllocationTextBox);
+            this.tabPage9.Controls.Add(this.viewRackAllocatedSlotsLabel);
+            this.tabPage9.Controls.Add(this.viewRackAllocatedProdTypeLabel);
+            this.tabPage9.Controls.Add(this.viewRackHeightLabel);
+            this.tabPage9.Controls.Add(this.viewRackFullLabel);
+            this.tabPage9.Controls.Add(this.viewRackVAllocationLabel);
+            this.tabPage9.Controls.Add(this.viewRackHAllocationLabel);
+            this.tabPage9.Controls.Add(this.viewRackLocationLabel);
+            this.tabPage9.Controls.Add(this.viewRackIDLabel);
+            this.tabPage9.Controls.Add(this.viewRackAllocatedSlotsDataGridView);
             this.tabPage9.Location = new System.Drawing.Point(4, 24);
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
@@ -844,6 +1017,161 @@
             this.tabPage9.TabIndex = 2;
             this.tabPage9.Text = "View Rack Layout";
             this.tabPage9.UseVisualStyleBackColor = true;
+            // 
+            // viewRackProductTypeTextBox
+            // 
+            this.viewRackProductTypeTextBox.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.viewRackProductTypeTextBox.Location = new System.Drawing.Point(164, 68);
+            this.viewRackProductTypeTextBox.Name = "viewRackProductTypeTextBox";
+            this.viewRackProductTypeTextBox.ReadOnly = true;
+            this.viewRackProductTypeTextBox.Size = new System.Drawing.Size(323, 25);
+            this.viewRackProductTypeTextBox.TabIndex = 15;
+            // 
+            // viewRackHeightTextBox
+            // 
+            this.viewRackHeightTextBox.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.viewRackHeightTextBox.Location = new System.Drawing.Point(98, 130);
+            this.viewRackHeightTextBox.Name = "viewRackHeightTextBox";
+            this.viewRackHeightTextBox.ReadOnly = true;
+            this.viewRackHeightTextBox.Size = new System.Drawing.Size(100, 25);
+            this.viewRackHeightTextBox.TabIndex = 14;
+            // 
+            // viewRackLocationTextBox
+            // 
+            this.viewRackLocationTextBox.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.viewRackLocationTextBox.Location = new System.Drawing.Point(76, 37);
+            this.viewRackLocationTextBox.Name = "viewRackLocationTextBox";
+            this.viewRackLocationTextBox.ReadOnly = true;
+            this.viewRackLocationTextBox.Size = new System.Drawing.Size(411, 25);
+            this.viewRackLocationTextBox.TabIndex = 13;
+            // 
+            // viewRackFullTextBox
+            // 
+            this.viewRackFullTextBox.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.viewRackFullTextBox.Location = new System.Drawing.Point(372, 6);
+            this.viewRackFullTextBox.Name = "viewRackFullTextBox";
+            this.viewRackFullTextBox.ReadOnly = true;
+            this.viewRackFullTextBox.Size = new System.Drawing.Size(115, 25);
+            this.viewRackFullTextBox.TabIndex = 12;
+            // 
+            // viewRackHAllocationTextBox
+            // 
+            this.viewRackHAllocationTextBox.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.viewRackHAllocationTextBox.Location = new System.Drawing.Point(151, 99);
+            this.viewRackHAllocationTextBox.Name = "viewRackHAllocationTextBox";
+            this.viewRackHAllocationTextBox.ReadOnly = true;
+            this.viewRackHAllocationTextBox.Size = new System.Drawing.Size(100, 25);
+            this.viewRackHAllocationTextBox.TabIndex = 11;
+            // 
+            // viewRackIDTextBox
+            // 
+            this.viewRackIDTextBox.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.viewRackIDTextBox.Location = new System.Drawing.Point(38, 6);
+            this.viewRackIDTextBox.Name = "viewRackIDTextBox";
+            this.viewRackIDTextBox.ReadOnly = true;
+            this.viewRackIDTextBox.Size = new System.Drawing.Size(245, 25);
+            this.viewRackIDTextBox.TabIndex = 10;
+            // 
+            // viewRackVAllocationTextBox
+            // 
+            this.viewRackVAllocationTextBox.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.viewRackVAllocationTextBox.Location = new System.Drawing.Point(383, 99);
+            this.viewRackVAllocationTextBox.Name = "viewRackVAllocationTextBox";
+            this.viewRackVAllocationTextBox.ReadOnly = true;
+            this.viewRackVAllocationTextBox.Size = new System.Drawing.Size(104, 25);
+            this.viewRackVAllocationTextBox.TabIndex = 9;
+            // 
+            // viewRackAllocatedSlotsLabel
+            // 
+            this.viewRackAllocatedSlotsLabel.AutoSize = true;
+            this.viewRackAllocatedSlotsLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.viewRackAllocatedSlotsLabel.Location = new System.Drawing.Point(6, 169);
+            this.viewRackAllocatedSlotsLabel.Name = "viewRackAllocatedSlotsLabel";
+            this.viewRackAllocatedSlotsLabel.Size = new System.Drawing.Size(101, 19);
+            this.viewRackAllocatedSlotsLabel.TabIndex = 8;
+            this.viewRackAllocatedSlotsLabel.Text = "Allocated Slots:";
+            // 
+            // viewRackAllocatedProdTypeLabel
+            // 
+            this.viewRackAllocatedProdTypeLabel.AutoSize = true;
+            this.viewRackAllocatedProdTypeLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.viewRackAllocatedProdTypeLabel.Location = new System.Drawing.Point(6, 71);
+            this.viewRackAllocatedProdTypeLabel.Name = "viewRackAllocatedProdTypeLabel";
+            this.viewRackAllocatedProdTypeLabel.Size = new System.Drawing.Size(152, 19);
+            this.viewRackAllocatedProdTypeLabel.TabIndex = 7;
+            this.viewRackAllocatedProdTypeLabel.Text = "Allocated Product Type:";
+            // 
+            // viewRackHeightLabel
+            // 
+            this.viewRackHeightLabel.AutoSize = true;
+            this.viewRackHeightLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.viewRackHeightLabel.Location = new System.Drawing.Point(6, 133);
+            this.viewRackHeightLabel.Name = "viewRackHeightLabel";
+            this.viewRackHeightLabel.Size = new System.Drawing.Size(85, 19);
+            this.viewRackHeightLabel.TabIndex = 6;
+            this.viewRackHeightLabel.Text = "Rack Height:";
+            // 
+            // viewRackFullLabel
+            // 
+            this.viewRackFullLabel.AutoSize = true;
+            this.viewRackFullLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.viewRackFullLabel.Location = new System.Drawing.Point(301, 9);
+            this.viewRackFullLabel.Name = "viewRackFullLabel";
+            this.viewRackFullLabel.Size = new System.Drawing.Size(65, 19);
+            this.viewRackFullLabel.TabIndex = 5;
+            this.viewRackFullLabel.Text = "Rack Full:";
+            // 
+            // viewRackVAllocationLabel
+            // 
+            this.viewRackVAllocationLabel.AutoSize = true;
+            this.viewRackVAllocationLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.viewRackVAllocationLabel.Location = new System.Drawing.Point(257, 102);
+            this.viewRackVAllocationLabel.Name = "viewRackVAllocationLabel";
+            this.viewRackVAllocationLabel.Size = new System.Drawing.Size(120, 19);
+            this.viewRackVAllocationLabel.TabIndex = 4;
+            this.viewRackVAllocationLabel.Text = "Vertical Allocation:";
+            // 
+            // viewRackHAllocationLabel
+            // 
+            this.viewRackHAllocationLabel.AutoSize = true;
+            this.viewRackHAllocationLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.viewRackHAllocationLabel.Location = new System.Drawing.Point(6, 102);
+            this.viewRackHAllocationLabel.Name = "viewRackHAllocationLabel";
+            this.viewRackHAllocationLabel.Size = new System.Drawing.Size(139, 19);
+            this.viewRackHAllocationLabel.TabIndex = 3;
+            this.viewRackHAllocationLabel.Text = "Horizontal Allocation:";
+            // 
+            // viewRackLocationLabel
+            // 
+            this.viewRackLocationLabel.AutoSize = true;
+            this.viewRackLocationLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.viewRackLocationLabel.Location = new System.Drawing.Point(6, 40);
+            this.viewRackLocationLabel.Name = "viewRackLocationLabel";
+            this.viewRackLocationLabel.Size = new System.Drawing.Size(64, 19);
+            this.viewRackLocationLabel.TabIndex = 2;
+            this.viewRackLocationLabel.Text = "Location:";
+            // 
+            // viewRackIDLabel
+            // 
+            this.viewRackIDLabel.AutoSize = true;
+            this.viewRackIDLabel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.viewRackIDLabel.Location = new System.Drawing.Point(6, 9);
+            this.viewRackIDLabel.Name = "viewRackIDLabel";
+            this.viewRackIDLabel.Size = new System.Drawing.Size(26, 19);
+            this.viewRackIDLabel.TabIndex = 1;
+            this.viewRackIDLabel.Text = "ID:";
+            // 
+            // viewRackAllocatedSlotsDataGridView
+            // 
+            this.viewRackAllocatedSlotsDataGridView.AllowUserToAddRows = false;
+            this.viewRackAllocatedSlotsDataGridView.AllowUserToDeleteRows = false;
+            this.viewRackAllocatedSlotsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.viewRackAllocatedSlotsDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.viewRackAllocatedSlotsDataGridView.Location = new System.Drawing.Point(6, 191);
+            this.viewRackAllocatedSlotsDataGridView.Name = "viewRackAllocatedSlotsDataGridView";
+            this.viewRackAllocatedSlotsDataGridView.RowTemplate.Height = 25;
+            this.viewRackAllocatedSlotsDataGridView.Size = new System.Drawing.Size(481, 207);
+            this.viewRackAllocatedSlotsDataGridView.TabIndex = 0;
             // 
             // menuStrip1
             // 
@@ -916,6 +1244,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.allocatedPalletsDataGridView)).EndInit();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.palletSlotResultDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.palletBeingAllocatedDataGridView)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabControl3.ResumeLayout(false);
             this.tabPage7.ResumeLayout(false);
@@ -927,6 +1259,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.newAllocatedStorageSlotsNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.newVerticalAllocationNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.newHorizontalAllocationNumericUpDown)).EndInit();
+            this.tabPage9.ResumeLayout(false);
+            this.tabPage9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.viewRackAllocatedSlotsDataGridView)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -1007,5 +1342,31 @@
         private Label label7;
         private Label label6;
         private LinkLabel newStorageRackHelpLinkLabel;
+        private TextBox viewRackVAllocationTextBox;
+        private Label viewRackAllocatedSlotsLabel;
+        private Label viewRackAllocatedProdTypeLabel;
+        private Label viewRackHeightLabel;
+        private Label viewRackFullLabel;
+        private Label viewRackVAllocationLabel;
+        private Label viewRackHAllocationLabel;
+        private Label viewRackLocationLabel;
+        private Label viewRackIDLabel;
+        private DataGridView viewRackAllocatedSlotsDataGridView;
+        private TextBox viewRackProductTypeTextBox;
+        private TextBox viewRackHeightTextBox;
+        private TextBox viewRackLocationTextBox;
+        private TextBox viewRackFullTextBox;
+        private TextBox viewRackHAllocationTextBox;
+        private TextBox viewRackIDTextBox;
+        private Label palletAllocationCheckBoxHelpTextLabel;
+        private Label palletToBeAllocatedLabel;
+        private DataGridView palletSlotResultDataGridView;
+        private DataGridView palletBeingAllocatedDataGridView;
+        private CheckBox allocatePalletAnyRackCheckBox;
+        private Label label9;
+        private Label searchAllocatePalletLabel;
+        private Button searchButton;
+        private Label label8;
+        private Button allocatePalletToSlotButton;
     }
 }

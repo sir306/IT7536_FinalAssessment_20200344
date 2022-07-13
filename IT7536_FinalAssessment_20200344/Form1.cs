@@ -80,7 +80,7 @@ namespace IT7536_FinalAssessment_20200344
             allocatedPalletsDataGridView.ClearSelection();
             currentStorageRackDataGridView.ClearSelection();
             // set forms min rack height on the create new storage rack tab
-            newRackHeightNumericUpDown.Minimum = new decimal(_rackMinHeight); 
+            newRackHeightNumericUpDown.Minimum = new decimal(_rackMinHeight);
         }
 
         /// <summary>
@@ -88,6 +88,11 @@ namespace IT7536_FinalAssessment_20200344
         /// </summary>
         private void CreateFiles()
         {
+            // check if file folder exists create if not
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
             // check Product Type File exists if not create 
             if (!File.Exists(path + _productTypeFile))
             {
@@ -101,9 +106,9 @@ namespace IT7536_FinalAssessment_20200344
                 fileStream.Close();
             }
             // check if Storage Racks File Exist if not Create
-            if(!File.Exists(path +_storageRackFile))
+            if (!File.Exists(path + _storageRackFile))
             {
-                fileStream = File.Create(path +_storageRackFile);
+                fileStream = File.Create(path + _storageRackFile);
                 fileStream.Close();
             }
             // check if storage rack slot file exists
@@ -133,16 +138,128 @@ namespace IT7536_FinalAssessment_20200344
             if (storageRacks.Count > 0) CreateStorageRackDataGrid();
         }
 
-        private void ViewRackButton_Click(object sender, EventArgs e)
-        {
 
-        }
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-
+            // TODO
         }
 
-        
+        private void allocatePalletToSlotButton_Click(object sender, EventArgs e)
+        {
+            // TODO
+        }
+
+        private void searchButton_Click(object sender, EventArgs e)
+        {
+            // TODO
+            if (palletBeingAllocatedDataGridView.SelectedCells.Count > 0)
+            {
+                palletBeingAllocatedDataGridView.SelectAll();
+                int id = (int)palletBeingAllocatedDataGridView.SelectedCells[0].Value;
+                string storageLocation = (string)palletBeingAllocatedDataGridView.SelectedCells[1].Value;
+                double palletHeight = (double)palletBeingAllocatedDataGridView.SelectedCells[2].Value;
+                string productType = (string)palletBeingAllocatedDataGridView.SelectedCells[3].Value;
+                ProductPallet pallet = ProductPallet.CreateProductPallet(id, storageLocation, palletHeight, productType);
+                bool isCheckboxChecked = allocatePalletAnyRackCheckBox.Checked; // false means no check and isn't locked to product type
+                // this value comes from pallet height of 140mm and 200mm clearance above pallet as rack height is in cm the height is 34
+                double minClearance = 34;
+                List<StorageSlot>? storageSlots = new();
+
+
+                if (isCheckboxChecked)
+                {
+                    foreach (StorageRack storage in storageRacks)
+                    {
+                        if (storage.AllocatedSlots == null) continue; // no allocated slots so continue
+                        if (storage.AllocatedProductType != productType) continue; // product types don't match
+
+                        if (storage.Full != false) continue; // this rack is full
+
+                        // check rack height to see if smaller than pallet minus min clearance
+                        if (storage.RackHeight - minClearance <= pallet.PalletHeight) continue;
+
+                        
+                        foreach (var item in storage.AllocatedSlots)
+                        {
+                            if(item == null) continue; // shouldn't be null so skip
+
+
+                            if(item.Full == true) continue; // if full then not useable
+                            List<ProductPallet>? allocatedPallets = GetAllocatedSlotPallets(storage.Id, item.Id);
+
+                            if(allocatedPallets != null && allocatedPallets.Count > 0)
+                            {
+                                double palletHeightStack = 0;
+                                foreach (var allocatedPallet in allocatedPallets)
+                                {
+                                    palletHeightStack += allocatedPallet.PalletHeight;
+                                }
+                                if ((pallet.PalletHeight + palletHeightStack + minClearance) > storage.RackHeight) continue; // current stack with new pallet too high
+                                else
+                                {
+                                    // slot can handle this pallet aswell
+                                    storageSlots.Add(item);
+                                }
+                            } 
+                            // slot is empty and passed height check already so add slot
+                            else
+                            {
+                                storageSlots.Add(item);
+                            }
+
+                        }
+
+                    }
+                }
+                else
+                {
+                    foreach (StorageRack storage in storageRacks)
+                    {
+                        if (storage.AllocatedSlots == null) continue; // no allocated slots so continue
+
+                        if (storage.Full != false) continue; // this rack is full
+
+                        // check rack height to see if smaller than pallet minus min clearance
+                        if (storage.RackHeight - minClearance <= pallet.PalletHeight) continue;
+
+
+                        foreach (var item in storage.AllocatedSlots)
+                        {
+                            if (item == null) continue; // shouldn't be null so skip
+
+                            if (item.Full == true) continue; // if full then not useable
+
+                            List<ProductPallet>? allocatedPallets = GetAllocatedSlotPallets(storage.Id, item.Id);
+
+                            // this checks the pallets currently in this slot and checks height
+                            if (allocatedPallets != null && allocatedPallets.Count > 0)
+                            {
+                                double palletHeightStack = 0;
+                                foreach (var allocatedPallet in allocatedPallets)
+                                {
+                                    palletHeightStack += allocatedPallet.PalletHeight;
+                                }
+                                if ((pallet.PalletHeight + palletHeightStack + minClearance) > storage.RackHeight) continue; // current stack with new pallet too high
+                                else
+                                {
+                                    // slot can handle this pallet aswell
+                                    storageSlots.Add(item);
+                                }
+                            }
+                            // slot is empty and passed height check already so add slot
+                            else
+                            {
+                                storageSlots.Add(item);
+                            }
+
+                        }
+
+                    }
+                }
+
+                /// TODO CREATE DATA GRID AND ADD SLOTS
+            }
+        }
     }
 }

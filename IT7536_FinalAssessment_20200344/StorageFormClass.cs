@@ -13,7 +13,7 @@ namespace IT7536_FinalAssessment_20200344
     /// </summary>
     public partial class Form1 : Form
     {
-        private double _rackMinHeight = 10.0; // TODO mend height to a realistic height
+        private double _rackMinHeight = 100.0; // TODO mend height to a realistic height
         private int _newStorageRackID = 1;// This holds current new rack id its used for creating new racks
 
         private void ReadStorageRackFile()
@@ -243,7 +243,7 @@ namespace IT7536_FinalAssessment_20200344
             DataGridViewComboBoxCell dropBoxComboCell = new(); // create ComboBoxCell for holding the Allocated slots
 
             // Create Custom ComboBox items from Allocated slots
-            if (storageRack.AllocatedSlots != null)
+            if (storageRack.AllocatedSlots != null && storageRack.AllocatedSlots.Count >0)
             {
                 int i = 0;
                 foreach (var item in storageRack.AllocatedSlots)
@@ -261,6 +261,7 @@ namespace IT7536_FinalAssessment_20200344
             else
             {
                 // adds a value to combo box incase no slots exist
+                dropBoxComboCell.Items.Add("No Allocated Pallets");
                 dropBoxComboCell.Value = "No Allocated Slots";
             }
 
@@ -284,14 +285,7 @@ namespace IT7536_FinalAssessment_20200344
             row.Cells["Product Type"].ReadOnly = true;
             row.Cells["Rack Height"].ReadOnly = true;
 
-            //dataGridView.Click += new EventHandler(myfunct);
-
         }
-
-        //private void myfunct(object? sender, EventArgs e)
-        //{
-        //    MessageBox.Show("custom click event");
-        //}
 
         /// <summary>
         /// Click evenet for the current storage data grid view to highlight and select the data, used for the delete and view buttons on the tab
@@ -300,11 +294,25 @@ namespace IT7536_FinalAssessment_20200344
         /// <param name="e">the event that fired the method</param>
         private void CurrentStorageRacksDataGridView_Click(object sender, EventArgs e)
         {
-            int index = currentStorageRackDataGridView.SelectedCells[0].RowIndex;
-            if (index != -1)
+            if (currentStorageRackDataGridView.SelectedCells.Count > 0) // check there is selected cells meaning there must be some form of data there
             {
-                currentStorageRackDataGridView.Rows[index].Selected = true;
+                int index = currentStorageRackDataGridView.SelectedCells[0].RowIndex;
+                if (index != -1)
+                {
+                    currentStorageRackDataGridView.Rows[index].Selected = true;
+                }
             }
+        }
+
+        private void ViewRackButton_Click(object sender, EventArgs e)
+        {
+            if(currentStorageRackDataGridView.SelectedCells.Count > 0) // if a cell is selected then a row can be or is selected and data exists
+            {
+                int rowIndex = currentStorageRackDataGridView.SelectedCells[0].RowIndex;
+                CreateViewStorageRackPage(storageRacks[rowIndex]);
+                tabControl3.SelectedIndex = 2;
+            }
+
         }
     }
 }

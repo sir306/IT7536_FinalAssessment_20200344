@@ -198,6 +198,7 @@ namespace IT7536_FinalAssessment_20200344
         private void LoadProductTypes()
         {
             newPalletProdTypecomboBox.Items.Clear();// clear existing data
+            newStorageRackProductTypecomboBox.Items.Clear();
             newPalletProdTypecomboBox.Text = "";
             if (productTypes.Count == 0)
             {

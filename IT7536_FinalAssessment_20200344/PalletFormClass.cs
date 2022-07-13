@@ -177,11 +177,27 @@ namespace IT7536_FinalAssessment_20200344
         {
             if (allocatedPalletsDataGridView.SelectedRows.Count > 0)
             {
-                // TODO
+                List<ProductPallet> pallet = new();
+                int id = (int)allocatedPalletsDataGridView.SelectedRows[0].Cells[0].Value;
+                string storageLocation = (string)allocatedPalletsDataGridView.SelectedRows[0].Cells[1].Value;
+                double palletHeight = (double)allocatedPalletsDataGridView.SelectedRows[0].Cells[2].Value;
+                string productType = (string)allocatedPalletsDataGridView.SelectedRows[0].Cells[3].Value;
+                ProductPallet productPalletToAdd = ProductPallet.CreateProductPallet(id, storageLocation, palletHeight, productType);
+                pallet.Add(productPalletToAdd);
+                CreatePalletDataGrid(palletBeingAllocatedDataGridView, pallet);
+                tabControl2.SelectedIndex = 2;
             }
             else if (nonAllocatedPalletsDataGridView.SelectedRows.Count > 0)
             {
-                // TODO
+                List<ProductPallet> pallet = new();
+                int id = (int)nonAllocatedPalletsDataGridView.SelectedRows[0].Cells[0].Value;
+                string storageLocation = (string)nonAllocatedPalletsDataGridView.SelectedRows[0].Cells[1].Value;
+                double palletHeight = (double)nonAllocatedPalletsDataGridView.SelectedRows[0].Cells[2].Value;
+                string productType = (string)nonAllocatedPalletsDataGridView.SelectedRows[0].Cells[3].Value;
+                ProductPallet productPalletToAdd = ProductPallet.CreateProductPallet(id, storageLocation, palletHeight, productType);
+                pallet.Add(productPalletToAdd);
+                CreatePalletDataGrid(palletBeingAllocatedDataGridView, pallet);
+                tabControl2.SelectedIndex = 2;
             }
             else
             {
@@ -200,10 +216,13 @@ namespace IT7536_FinalAssessment_20200344
         {
             allocatedPalletsDataGridView.ClearSelection();
 
-            int index = nonAllocatedPalletsDataGridView.SelectedCells[0].RowIndex;
-            if (index != -1)
+            if (nonAllocatedPalletsDataGridView.SelectedCells.Count > 0)
             {
-                nonAllocatedPalletsDataGridView.Rows[index].Selected = true;
+                int index = nonAllocatedPalletsDataGridView.SelectedCells[0].RowIndex;
+                if (index != -1)
+                {
+                    nonAllocatedPalletsDataGridView.Rows[index].Selected = true;
+                }
             }
         }
 
@@ -216,10 +235,13 @@ namespace IT7536_FinalAssessment_20200344
         {
             nonAllocatedPalletsDataGridView.ClearSelection();
 
-            int index = allocatedPalletsDataGridView.SelectedCells[0].RowIndex;
-            if (index != -1)
+            if(allocatedPalletsDataGridView.SelectedCells.Count > 0)
             {
-                allocatedPalletsDataGridView.Rows[index].Selected = true;
+                int index = allocatedPalletsDataGridView.SelectedCells[0].RowIndex;
+                if (index != -1)
+                {
+                    allocatedPalletsDataGridView.Rows[index].Selected = true;
+                }
             }
         }
 
@@ -514,6 +536,12 @@ namespace IT7536_FinalAssessment_20200344
                 CreatePalletDataGrid(nonAllocatedPalletsDataGridView, nonAllocatedPallets);
                 AddPalletToFile(pallet);
             }
+        }
+
+        private void CreatePalletLocation(ProductPallet productPallet, int rackID, int slotID)
+        {
+           
+            string palletLocation = $"Storage Rack {rackID} and Storage Slot {slotID}";
         }
     }
 }
