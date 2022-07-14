@@ -13,12 +13,12 @@ namespace IT7536_FinalAssessment_20200344
     /// </summary>
     public partial class Form1 : Form
     {
-        private double _rackMinHeight = 100.0; // TODO mend height to a realistic height
+        private double _rackMinHeight = 100.0; // for this the rack will be set to a minimum of 100cm/1m
         private int _newStorageRackID = 1;// This holds current new rack id its used for creating new racks
 
-        private void ReadStorageRackFile()
+        private void ReadStorageRackFile(string filepath)
         {
-            csvTextFieldParser = new TextFieldParser(path + _storageRackFile);
+            csvTextFieldParser = new TextFieldParser(filepath);
             if (csvTextFieldParser == null)
             {
                 throw new Exception("An error occured with csvTextFieldParser");
@@ -243,7 +243,7 @@ namespace IT7536_FinalAssessment_20200344
             DataGridViewComboBoxCell dropBoxComboCell = new(); // create ComboBoxCell for holding the Allocated slots
 
             // Create Custom ComboBox items from Allocated slots
-            if (storageRack.AllocatedSlots != null && storageRack.AllocatedSlots.Count >0)
+            if (storageRack.AllocatedSlots != null && storageRack.AllocatedSlots.Count > 0)
             {
                 int i = 0;
                 foreach (var item in storageRack.AllocatedSlots)
@@ -306,13 +306,87 @@ namespace IT7536_FinalAssessment_20200344
 
         private void ViewRackButton_Click(object sender, EventArgs e)
         {
-            if(currentStorageRackDataGridView.SelectedCells.Count > 0) // if a cell is selected then a row can be or is selected and data exists
+            if (currentStorageRackDataGridView.SelectedCells.Count > 0) // if a cell is selected then a row can be or is selected and data exists
             {
                 int rowIndex = currentStorageRackDataGridView.SelectedCells[0].RowIndex;
                 CreateViewStorageRackPage(storageRacks[rowIndex]);
                 tabControl3.SelectedIndex = 2;
             }
 
+        }
+
+        private void DeleteStorageRack(StorageRack storageRack)
+        {
+            string? tempFile = Path.GetTempFileName(); // create temp file
+            StreamWriter streamWriter = new StreamWriter(tempFile); // create steamwriter for temp file
+            // null check for csvTextFieldParser
+            csvTextFieldParser = new TextFieldParser(path + _storageRackFile);
+            if (csvTextFieldParser == null)
+            {
+                throw new Exception("An error occured with csvTextFieldParser");
+            }
+            csvTextFieldParser.SetDelimiters(new string[] { "," }); // set Delimiter params for TextFieldParser
+            int currentFileLine = 0;// declared for tracking current file line starts at 0 as increments every loop at the start
+            int foundAt = -1;// stores what line the pallet was found on
+            while (!csvTextFieldParser.EndOfData)
+            {
+                string? line = csvTextFieldParser.ReadLine(); // create line string from readline
+                                                              // null check on line before progressing as no null lines are permitted
+                if (line == null)
+                {
+                    csvTextFieldParser.Close();
+                    streamWriter.Close();
+                    string message = "There has been a problem in reading the CSV file in regards to the Product Pallet File, t" +
+                        "here appears to be an ilegal entry at line: " + currentFileLine.ToString();
+                    string caption = "ERROR";
+                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    throw new Exception("An error occured with csvTextFieldParser"); ;
+                }
+                // split the line, this is used for checking id against the specified id
+                string[]? values = line.Split(",");
+                // null check on values before progressing as no null lines are permitted
+                if (values == null)
+                {
+                    csvTextFieldParser.Close();
+                    streamWriter.Close();
+                    string message = "There has been a problem in reading the CSV file in regards to the Product Pallet File, t" +
+                        "here appears to be an ilegal entry at line: " + currentFileLine.ToString();
+                    string caption = "ERROR";
+                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    throw new Exception("An error occured with csvTextFieldParser");
+                }
+                // found don't write line and add the line at what found at, move onto next line
+                if (int.Parse(values[0]) == storageRack.Id) { foundAt = currentFileLine; currentFileLine++; continue; }
+                // check current line is not on the second and didn't just delete line 1 if so don't write new line into temp file
+                else if (currentFileLine == 1 && foundAt == 0)
+                { streamWriter.Write(line); currentFileLine++; continue; }
+                // first line of file and didn't find the pallet there, write line but no new line
+                else if (currentFileLine == 0)
+                {
+                    streamWriter.Write(line);
+                    currentFileLine++;
+                    continue;
+                }
+                // line has not matched any previous requirements so write new line and line and continue as normal
+                else
+                {
+                    streamWriter.Write(Environment.NewLine);
+                    streamWriter.Write(line);
+                    currentFileLine++;
+                }
+            }
+            // close reader and writer
+            csvTextFieldParser.Close();
+            streamWriter.Close();
+            // delete old path
+            File.Delete(path + _storageRackFile);
+            // move temp file and name it to the previous file
+            File.Move(tempFile, path + _storageRackFile);
+
+            // remove from rack list and reload grid
+            storageRacks.Remove(storageRack);
+            CreateStorageRackDataGrid();
+            ClearViewStorageRack();
         }
     }
 }

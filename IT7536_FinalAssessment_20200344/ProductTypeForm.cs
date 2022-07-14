@@ -16,9 +16,9 @@ namespace IT7536_FinalAssessment_20200344
         /// Read productTypeFile for the program and create objects for there respective classes and append it to the form where needed
         /// </summary>
         /// <exception cref="Exception">If the file fails to read then throw error as the files should be created before being read</exception>
-        private void ReadProductType()
+        private void ReadProductType(string filepath)
         {
-            streamReader = File.OpenText(path + _productTypeFile);
+            streamReader = File.OpenText(filepath);
             if (streamReader == null)
             {
                 throw new Exception("An error occured with stream reader");

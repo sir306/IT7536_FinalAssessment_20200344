@@ -8,6 +8,20 @@ namespace IT7536_FinalAssessment_20200344
 {
     public partial class Form1 : Form
     {
+        private void ClearViewStorageRack()
+        {
+            // assign form values
+            viewRackIDTextBox.Text = "";
+            viewRackFullTextBox.Text = "";
+            viewRackLocationTextBox.Text = "";
+            viewRackProductTypeTextBox.Text = "";
+            viewRackHAllocationTextBox.Text = "";
+            viewRackVAllocationTextBox.Text = "";
+            viewRackHeightTextBox.Text = "";
+            viewRackAllocatedSlotsDataGridView.Columns.Clear();
+            viewRackAllocatedSlotsDataGridView.Rows.Clear();
+        }
+
         private void CreateViewStorageRackPage(StorageRack storageRack)
         {
             if (storageRack == null) return; // this should only fire if the view button manages to send an empty rack object which it shouldn't
@@ -21,20 +35,19 @@ namespace IT7536_FinalAssessment_20200344
             viewRackVAllocationTextBox.Text = storageRack.VerticalSlots.ToString();
             viewRackHeightTextBox.Text = storageRack.RackHeight.ToString() + "cm";
 
-            CreateViewStorageRackDataGrid();
+            CreateViewStorageRackDataGrid(viewRackAllocatedSlotsDataGridView, false);
             if (storageRack.AllocatedSlots != null)
             {
                 foreach (var item in storageRack.AllocatedSlots)
                 {
                     List<ProductPallet>? slotsPallets = GetAllocatedSlotPallets(storageRack.Id, item.Id);
-                    CreateAllocatedSlotRow(viewRackAllocatedSlotsDataGridView, item, slotsPallets);
+                    CreateAllocatedSlotRow(viewRackAllocatedSlotsDataGridView, item, slotsPallets, null);
                 }
             }
         }
 
-        private void CreateViewStorageRackDataGrid()
+        private void CreateViewStorageRackDataGrid(DataGridView dataGridView, bool includeRackID)
         {
-            DataGridView dataGridView = viewRackAllocatedSlotsDataGridView;
             DataGridViewComboBoxColumn comboBoxColumn = new DataGridViewComboBoxColumn();
 
             dataGridView.Columns.Clear();
@@ -42,6 +55,7 @@ namespace IT7536_FinalAssessment_20200344
 
             comboBoxColumn.HeaderText = "Allocated Pallets";
             comboBoxColumn.Name = "Allocated Pallets";
+
 
             dataGridView.Columns.Add("Slot ID", "Slot ID");
             dataGridView.Columns.Add(comboBoxColumn);
@@ -55,19 +69,26 @@ namespace IT7536_FinalAssessment_20200344
             dataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+
+
+            if (includeRackID)
+            {
+                palletSlotResultDataGridView.Columns.Add("Rack ID", "Rack ID");
+                palletSlotResultDataGridView.Columns[5].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            }
         }
 
-        private void CreateAllocatedSlotRow(DataGridView dataGridView, StorageSlot storageSlot, List<ProductPallet>? pallets)
+        private void CreateAllocatedSlotRow(DataGridView dataGridView, StorageSlot storageSlot, List<ProductPallet>? pallets, int? RackID)
         {
             int rowId = dataGridView.Rows.Add(); // create new row and add it, store new row id
-            double availableHeight = storageSlot.RackHeight;
+            double availableHeight = storageSlot.RackHeight - _minClearance;
             string productType = storageSlot.AllocatedProductType;
 
             DataGridViewRow row = dataGridView.Rows[rowId];// store the new row to a DataGridViewRow variable
             DataGridViewComboBoxCell dropBoxComboCell = new(); // create ComboBoxCell for holding the Allocated slots
 
             // create custom drop box for pallets on the slot
-            if(pallets != null && pallets.Count > 0)
+            if (pallets != null && pallets.Count > 0)
             {
                 int i = 0;
                 foreach (var item in pallets)
@@ -77,7 +98,7 @@ namespace IT7536_FinalAssessment_20200344
                     availableHeight -= item.PalletHeight;
                     // set the inital value to the first index
                     dropBoxComboCell.Items.Add(displayString);
-                    if(i == 1)
+                    if (i == 1)
                     {
                         dropBoxComboCell.Value = displayString;
                     }
@@ -104,6 +125,12 @@ namespace IT7536_FinalAssessment_20200344
             row.Cells["Slot Height"].ReadOnly = true;
             row.Cells["Available Height"].ReadOnly = true;
             row.Cells["Product Type"].ReadOnly = true;
+
+            if (RackID != null)
+            {
+                row.Cells["Rack ID"].Value = RackID;
+                row.Cells["Rack ID"].ReadOnly = true;
+            }
         }
 
         private List<ProductPallet>? GetAllocatedSlotPallets(int rackID, int slotID)

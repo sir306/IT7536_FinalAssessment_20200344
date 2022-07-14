@@ -1,4 +1,5 @@
 using Microsoft.VisualBasic.FileIO;
+using System.Diagnostics;
 
 namespace IT7536_FinalAssessment_20200344
 {
@@ -68,6 +69,15 @@ namespace IT7536_FinalAssessment_20200344
         /// </summary>
         private double _minHeight = 0.0;
 
+        // this value comes from pallet height of 140mm and 200mm clearance above pallet as rack height is in cm the height is 34
+        private const double _minClearance = 34;
+
+        /// <summary>
+        /// Declare custom event handler
+        /// </summary>
+        public EventHandler? OpenPdfHandle;
+
+
         public Form1()
         {
             InitializeComponent();
@@ -130,136 +140,239 @@ namespace IT7536_FinalAssessment_20200344
         /// </summary>
         private void ReadFiles()
         {
-            ReadProductType();
-            ReadProductPallet();
+            ReadProductType(path+_productTypeFile);
+            ReadProductPallet(path+_productPalletFile);
             if (productPallets.Count > 0) CreatePalletDataGrid(allocatedPalletsDataGridView, productPallets);
             if (nonAllocatedPallets.Count > 0) CreatePalletDataGrid(nonAllocatedPalletsDataGridView, nonAllocatedPallets);
-            ReadStorageRackFile();
+            ReadStorageRackFile(path+_storageRackFile);
             if (storageRacks.Count > 0) CreateStorageRackDataGrid();
         }
 
 
-
+        /// <summary>
+        /// This function deletes the currently selected rack provided it exists
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteButton_Click(object sender, EventArgs e)
         {
+            string msg = "";
+            string caption = "";
             // TODO
-        }
-
-        private void allocatePalletToSlotButton_Click(object sender, EventArgs e)
-        {
-            // TODO
-        }
-
-        private void searchButton_Click(object sender, EventArgs e)
-        {
-            // TODO
-            if (palletBeingAllocatedDataGridView.SelectedCells.Count > 0)
+            if (currentStorageRackDataGridView.SelectedCells.Count > 0)
             {
-                palletBeingAllocatedDataGridView.SelectAll();
-                int id = (int)palletBeingAllocatedDataGridView.SelectedCells[0].Value;
-                string storageLocation = (string)palletBeingAllocatedDataGridView.SelectedCells[1].Value;
-                double palletHeight = (double)palletBeingAllocatedDataGridView.SelectedCells[2].Value;
-                string productType = (string)palletBeingAllocatedDataGridView.SelectedCells[3].Value;
-                ProductPallet pallet = ProductPallet.CreateProductPallet(id, storageLocation, palletHeight, productType);
-                bool isCheckboxChecked = allocatePalletAnyRackCheckBox.Checked; // false means no check and isn't locked to product type
-                // this value comes from pallet height of 140mm and 200mm clearance above pallet as rack height is in cm the height is 34
-                double minClearance = 34;
-                List<StorageSlot>? storageSlots = new();
-
-
-                if (isCheckboxChecked)
+                // select the whole row if not already
+                int index = currentStorageRackDataGridView.SelectedCells[0].RowIndex;
+                if (index != -1)
                 {
-                    foreach (StorageRack storage in storageRacks)
+                    currentStorageRackDataGridView.Rows[index].Selected = true;
+                }
+
+                // check if any pallets allocated to the rack
+                int storageRackId = (int)currentStorageRackDataGridView.Rows[index].Cells[0].Value;
+
+                // the currently selected rack in memory
+                StorageRack selectedRack = storageRacks[index];
+                // null check rack.allocatedSlots = if null can procceed without any further checks as no slots = no pallets in storage
+                if (selectedRack.AllocatedSlots != null)
+                {
+                    foreach (var item in selectedRack.AllocatedSlots)
                     {
-                        if (storage.AllocatedSlots == null) continue; // no allocated slots so continue
-                        if (storage.AllocatedProductType != productType) continue; // product types don't match
-
-                        if (storage.Full != false) continue; // this rack is full
-
-                        // check rack height to see if smaller than pallet minus min clearance
-                        if (storage.RackHeight - minClearance <= pallet.PalletHeight) continue;
-
-                        
-                        foreach (var item in storage.AllocatedSlots)
+                        List<ProductPallet>? slotsPallets = GetAllocatedSlotPallets(storageRackId, item.Id);
+                        // pallets are in this rack stop and alert the user to move pallets
+                        if (slotsPallets != null && slotsPallets.Count > 0)
                         {
-                            if(item == null) continue; // shouldn't be null so skip
-
-
-                            if(item.Full == true) continue; // if full then not useable
-                            List<ProductPallet>? allocatedPallets = GetAllocatedSlotPallets(storage.Id, item.Id);
-
-                            if(allocatedPallets != null && allocatedPallets.Count > 0)
-                            {
-                                double palletHeightStack = 0;
-                                foreach (var allocatedPallet in allocatedPallets)
-                                {
-                                    palletHeightStack += allocatedPallet.PalletHeight;
-                                }
-                                if ((pallet.PalletHeight + palletHeightStack + minClearance) > storage.RackHeight) continue; // current stack with new pallet too high
-                                else
-                                {
-                                    // slot can handle this pallet aswell
-                                    storageSlots.Add(item);
-                                }
-                            } 
-                            // slot is empty and passed height check already so add slot
-                            else
-                            {
-                                storageSlots.Add(item);
-                            }
-
+                            msg = "There are Pallets that have been allocated to this rack, you need to move them or delete them to delete this Rack";
+                            caption = "ALERT";
+                            MessageBox.Show(msg, caption);
+                            return;
                         }
-
                     }
+                }
+                // warn user they are going to delete a storage rack
+                DialogResult result;
+                msg = "You are about to delete a Storage Rack are you sure you want to do that?";
+                caption = "WARNING";
+                result = MessageBox.Show(msg, caption, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                // if no then don't continue
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+                DeleteStorageRack(selectedRack);
+            }
+            else
+            {
+                msg = "You haven't selected a Storage Rack or none exist?";
+                caption = "Error";
+                MessageBox.Show(msg, caption);
+            }
+        }
+
+        /// <summary>
+        /// Calls the custom event that opens a pdf to explain how to create a new rack
+        /// </summary>
+        /// <param name="sender">the object calling this</param>
+        /// <param name="e">the event triggering this</param>
+        private void newStorageRackHelpLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // call custom event handler
+            OpenPdf(EventArgs.Empty);
+        }
+
+
+        /// <summary>
+        /// Custom event execution
+        /// </summary>
+        /// <param name="e">Event arg calling function</param>
+        protected virtual void OpenPdf(EventArgs e)
+        {
+            // bind event handler
+            OpenPdfHandle?.Invoke(this, e);
+
+            try
+            {
+                string? helpPdf = "Help.Pdf";
+                Process.Start(new ProcessStartInfo { FileName = helpPdf, UseShellExecute = true }); // .net 6 uses start process like this!
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        private void viewDevelopersSiteLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                string? website = @"https://nickscoding.website";
+                Process.Start(new ProcessStartInfo { FileName = website, UseShellExecute = true }); // .net 6 uses start process like this!
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        /// <summary>
+        /// This is for opening a new file for the corresponding tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenExistingFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Warning before loading custom files make sure they match the expected format as they will fail to load otherwise", "WARNING");
+            if(tabControl1.SelectedIndex == 0)
+            {
+                // tab is the product type
+                if(openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    var filePath = openFileDialog1.FileName;
+                    ReadProductType(filePath);
+                }
+            }
+            if (tabControl1.SelectedIndex == 1)
+            {
+                // tab is the product pallet
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    var filePath = openFileDialog1.FileName;
+                    ReadProductPallet(filePath);
+                }
+            }
+            if (tabControl1.SelectedIndex == 2)
+            {
+                // tab is the storage rack
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    var filePath = openFileDialog1.FileName;
+                    ReadStorageRackFile(filePath);
+                }
+            }
+        }
+
+        private void SaveBackupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            MessageBox.Show("Warning this is to save a backup of the currently selected tab i.e. if you are in the Storage Rack tab you will back up the storage rack csv file", "WARNING");
+            
+            if (tabControl1.SelectedIndex == 0)
+            {
+                saveFileDialog1.Filter = "Text file (*.txt)|*.txt";
+                saveFileDialog1.FileName = "productType";
+                // tab is the product type
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    var filePath = saveFileDialog1.FileName;
+                    if(filePath != "")
+                    {
+                        SaveFileToNewFileLocation(filePath, path + _productTypeFile);
+                    }
+                }
+            }
+            if (tabControl1.SelectedIndex == 1)
+            {
+                saveFileDialog1.Filter = "CSV file (.csv)|.csv";
+                saveFileDialog1.FileName = "productPallet";
+                // tab is the product pallet
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    var filePath = saveFileDialog1.FileName;
+                    if (filePath != "")
+                    {
+                        SaveFileToNewFileLocation(filePath, path + _productPalletFile);
+                    }
+                }
+            }
+            if (tabControl1.SelectedIndex == 2)
+            {
+                saveFileDialog1.Filter = "CSV file (.csv)|.csv";
+                saveFileDialog1.FileName = "storageRack";
+                // tab is the storage rack
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    var filePath = saveFileDialog1.FileName;
+                    if (filePath != "")
+                    {
+                        SaveFileToNewFileLocation(filePath, path + _storageRackFile);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// This is for backing up files in particular the storage rack, the product pallets, and the product types
+        /// </summary>
+        /// <param name="newFilePath">The destination of the new file and/or new filename</param>
+        /// <param name="currentFilePath">The current file path of the file selected</param>
+        /// <exception cref="Exception">Fires if creating new file path fails</exception>
+        private void SaveFileToNewFileLocation(string newFilePath, string currentFilePath)
+        {
+            fileStream = File.Create(newFilePath);
+            fileStream.Close();
+            string[] lines = File.ReadAllLines(currentFilePath);
+
+            if (fileStream == null)
+            {
+                throw new Exception("An error occured with stream reader");
+            }
+            int i = 0;
+            foreach (string item in lines)
+            {
+                if(i == 0)
+                {
+                    File.AppendAllText((newFilePath), item);
                 }
                 else
                 {
-                    foreach (StorageRack storage in storageRacks)
-                    {
-                        if (storage.AllocatedSlots == null) continue; // no allocated slots so continue
-
-                        if (storage.Full != false) continue; // this rack is full
-
-                        // check rack height to see if smaller than pallet minus min clearance
-                        if (storage.RackHeight - minClearance <= pallet.PalletHeight) continue;
-
-
-                        foreach (var item in storage.AllocatedSlots)
-                        {
-                            if (item == null) continue; // shouldn't be null so skip
-
-                            if (item.Full == true) continue; // if full then not useable
-
-                            List<ProductPallet>? allocatedPallets = GetAllocatedSlotPallets(storage.Id, item.Id);
-
-                            // this checks the pallets currently in this slot and checks height
-                            if (allocatedPallets != null && allocatedPallets.Count > 0)
-                            {
-                                double palletHeightStack = 0;
-                                foreach (var allocatedPallet in allocatedPallets)
-                                {
-                                    palletHeightStack += allocatedPallet.PalletHeight;
-                                }
-                                if ((pallet.PalletHeight + palletHeightStack + minClearance) > storage.RackHeight) continue; // current stack with new pallet too high
-                                else
-                                {
-                                    // slot can handle this pallet aswell
-                                    storageSlots.Add(item);
-                                }
-                            }
-                            // slot is empty and passed height check already so add slot
-                            else
-                            {
-                                storageSlots.Add(item);
-                            }
-
-                        }
-
-                    }
+                    string contents = Environment.NewLine + item;
+                    File.AppendAllText((newFilePath), contents);
                 }
-
-                /// TODO CREATE DATA GRID AND ADD SLOTS
+                i++;
             }
+            
         }
     }
 }

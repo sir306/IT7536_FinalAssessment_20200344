@@ -19,9 +19,13 @@ namespace IT7536_FinalAssessment_20200344
         /// Read productPalletFile for the program and create objects for there respective classes and append it to the form where needed
         /// </summary>
         /// <exception cref="Exception">If the file fails to read then throw error as the files should be created before being read</exception>
-        private void ReadProductPallet()
+        private void ReadProductPallet(string filepath)
         {
-            csvTextFieldParser = new TextFieldParser(path + _productPalletFile);
+            // clear any old data previously loaded
+            productPallets.Clear();
+            nonAllocatedPallets.Clear();
+
+            csvTextFieldParser = new TextFieldParser(filepath);
             if (csvTextFieldParser == null)
             {
                 throw new Exception("An error occured with csvTextFieldParser");
@@ -175,6 +179,10 @@ namespace IT7536_FinalAssessment_20200344
         /// <param name="e">The event that triggered the method, in this case the click event</param>
         private void MovePalletButton_Click(object sender, EventArgs e)
         {
+            // clear old data out
+            palletSlotResultDataGridView.Rows.Clear();
+            palletSlotResultDataGridView.Columns.Clear();
+
             if (allocatedPalletsDataGridView.SelectedRows.Count > 0)
             {
                 List<ProductPallet> pallet = new();
@@ -494,6 +502,7 @@ namespace IT7536_FinalAssessment_20200344
             File.Delete(path + _productPalletFile);
             // move temp file and name it to the previous file
             File.Move(tempFile, path + _productPalletFile);
+            newPalletID++;
         }
 
         /// <summary>
@@ -521,6 +530,21 @@ namespace IT7536_FinalAssessment_20200344
             else if (inputText != "Enter A New Product Type.." && inputText != "" && inputText != "Select the Pallets Product Type..")
             {
                 palletType = inputText.ToString();
+                bool doesItExist = false;
+                // check to see if it exists
+                foreach (ProductType item in productTypes)
+                {
+                    if (item.ProductName == palletType)
+                    {
+                        doesItExist = true;
+                    }
+                }
+                // product type doesn't exist so create new one
+                if(!doesItExist)
+                {
+                    CreateProductType(palletType);
+                }
+               
             }
             else
             {
@@ -535,13 +559,82 @@ namespace IT7536_FinalAssessment_20200344
                 nonAllocatedPallets.Add(pallet);
                 CreatePalletDataGrid(nonAllocatedPalletsDataGridView, nonAllocatedPallets);
                 AddPalletToFile(pallet);
+
+                // reset form
+                newPalletHeightTextBox.Text = _palletHeightInputDefault;
+                LoadProductTypes();
+                newPalletIDTextBox.Text = newPalletID.ToString();
             }
         }
 
+        /// <summary>
+        /// The Pallet has been allocated so update location and save to file
+        /// </summary>
+        /// <param name="productPallet">This should be the pallet thats being updated</param>
+        /// <param name="rackID">The rack where the pallet is located</param>
+        /// <param name="slotID">The slot that the pallet is located in</param>
+        /// <exception cref="Exception">This will fire when there is problems in loading files and when there is null lines in the file</exception>
         private void CreatePalletLocation(ProductPallet productPallet, int rackID, int slotID)
         {
-           
+           // the pallets new location
             string palletLocation = $"Storage Rack {rackID} and Storage Slot {slotID}";
+            productPallet.StorageLocation = palletLocation; // update location
+            // create the line to update old line
+            string newline = $"{productPallet.Id},{productPallet.StorageLocation},{productPallet.PalletHeight},{productPallet.ProductType}";
+
+            string? tempFile = Path.GetTempFileName(); // create temp file
+            StreamWriter streamWriter = new StreamWriter(tempFile); // create steamwriter for temp file
+            csvTextFieldParser = new TextFieldParser(path + _productPalletFile); // read the current pallet file with the csvTextfieldParser
+            // null check for csvTextFieldParser
+            if (csvTextFieldParser == null)
+            {
+                streamWriter.Close();
+                throw new Exception("An error occured with csvTextFieldParser");
+            }
+            // set Delimiters for textFieldParser
+            csvTextFieldParser.SetDelimiters(new string[] { "," });
+            int currentLine = 0; // stores current line for errors
+            while (!csvTextFieldParser.EndOfData)
+            {
+                string? line = csvTextFieldParser.ReadLine(); // create line string from readline
+                // null check on line before progressing as no null lines are permitted
+                if (line == null)
+                {
+                    csvTextFieldParser.Close();
+                    streamWriter.Close();
+                    string message = "There has been a problem in reading the CSV file in regards to the Product Pallet File, t" +
+                        "here appears to be an ilegal entry at line: " + currentLine.ToString();
+                    string caption = "ERROR";
+                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    throw new Exception("An error occured with csvTextFieldParser"); ;
+                }
+                // see if current line is where the pallet is located?
+                string[] values = line.Split(",");
+                if (int.Parse(values[0]) == productPallet.Id)
+                {
+                    streamWriter.WriteLine(newline);// found
+                }
+                else
+                {
+                    streamWriter.WriteLine(line); // not found
+                }
+                currentLine++;
+            }
+            // close reader and writer
+            csvTextFieldParser.Close();
+            streamWriter.Close();
+            // delete old path
+            File.Delete(path + _productPalletFile);
+            // move temp file and name it to the previous file
+            File.Move(tempFile, path + _productPalletFile);
+            MessageBox.Show("Product Pallet Successfully Allocated", "Success");
+            tabControl2.SelectedIndex = 0; // return to the current pallets tab
+            
+            // clear allocation tab grids
+            palletSlotResultDataGridView.Columns.Clear();
+            palletSlotResultDataGridView.Rows.Clear();
+            palletBeingAllocatedDataGridView.Columns.Clear();
+            palletBeingAllocatedDataGridView.Rows.Clear();
         }
     }
 }

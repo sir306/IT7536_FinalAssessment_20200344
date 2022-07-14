@@ -121,9 +121,9 @@
             this.openExistingFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveCurrentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveBackupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.viewDevelopersSiteLinkLabel = new System.Windows.Forms.LinkLabel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -154,7 +154,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(12, 27);
+            this.tabControl1.Location = new System.Drawing.Point(8, 31);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(501, 456);
@@ -594,11 +594,10 @@
             this.palletSlotResultDataGridView.AllowUserToDeleteRows = false;
             this.palletSlotResultDataGridView.AllowUserToOrderColumns = true;
             this.palletSlotResultDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.palletSlotResultDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.palletSlotResultDataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.palletSlotResultDataGridView.Location = new System.Drawing.Point(6, 160);
             this.palletSlotResultDataGridView.MultiSelect = false;
             this.palletSlotResultDataGridView.Name = "palletSlotResultDataGridView";
-            this.palletSlotResultDataGridView.ReadOnly = true;
             this.palletSlotResultDataGridView.RowTemplate.Height = 25;
             this.palletSlotResultDataGridView.Size = new System.Drawing.Size(477, 150);
             this.palletSlotResultDataGridView.TabIndex = 2;
@@ -770,7 +769,7 @@
             this.newStorageRackHelpLinkLabel.TabIndex = 25;
             this.newStorageRackHelpLinkLabel.TabStop = true;
             this.newStorageRackHelpLinkLabel.Text = "Help";
-            this.newStorageRackHelpLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.NewStorageRackHelpLinkLabel_LinkClicked);
+            this.newStorageRackHelpLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.newStorageRackHelpLinkLabel_LinkClicked);
             // 
             // label7
             // 
@@ -1177,9 +1176,9 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Location = new System.Drawing.Point(5, 5);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(521, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(511, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -1195,44 +1194,52 @@
             // openExistingFileToolStripMenuItem
             // 
             this.openExistingFileToolStripMenuItem.Name = "openExistingFileToolStripMenuItem";
-            this.openExistingFileToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.openExistingFileToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openExistingFileToolStripMenuItem.Text = "Open Existing File";
+            this.openExistingFileToolStripMenuItem.Click += new System.EventHandler(this.OpenExistingFileToolStripMenuItem_Click);
             // 
             // saveCurrentToolStripMenuItem
             // 
             this.saveCurrentToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveBackupToolStripMenuItem,
-            this.saveToSystemToolStripMenuItem});
+            this.saveBackupToolStripMenuItem});
             this.saveCurrentToolStripMenuItem.Name = "saveCurrentToolStripMenuItem";
-            this.saveCurrentToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.saveCurrentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveCurrentToolStripMenuItem.Text = "Save";
             // 
             // saveBackupToolStripMenuItem
             // 
             this.saveBackupToolStripMenuItem.Name = "saveBackupToolStripMenuItem";
-            this.saveBackupToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.saveBackupToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveBackupToolStripMenuItem.Text = "Save Backup";
-            // 
-            // saveToSystemToolStripMenuItem
-            // 
-            this.saveToSystemToolStripMenuItem.Name = "saveToSystemToolStripMenuItem";
-            this.saveToSystemToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
-            this.saveToSystemToolStripMenuItem.Text = "Save In Application";
+            this.saveBackupToolStripMenuItem.Click += new System.EventHandler(this.SaveBackupToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // viewDevelopersSiteLinkLabel
+            // 
+            this.viewDevelopersSiteLinkLabel.AutoSize = true;
+            this.viewDevelopersSiteLinkLabel.Location = new System.Drawing.Point(183, 490);
+            this.viewDevelopersSiteLinkLabel.Name = "viewDevelopersSiteLinkLabel";
+            this.viewDevelopersSiteLinkLabel.Size = new System.Drawing.Size(134, 15);
+            this.viewDevelopersSiteLinkLabel.TabIndex = 2;
+            this.viewDevelopersSiteLinkLabel.TabStop = true;
+            this.viewDevelopersSiteLinkLabel.Text = "Visit The Developers Site";
+            this.viewDevelopersSiteLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.viewDevelopersSiteLinkLabel_LinkClicked);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(521, 489);
+            this.ClientSize = new System.Drawing.Size(521, 510);
+            this.Controls.Add(this.viewDevelopersSiteLinkLabel);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Padding = new System.Windows.Forms.Padding(5);
+            this.Text = "Storage Allocator";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -1291,7 +1298,6 @@
         private ToolStripMenuItem openExistingFileToolStripMenuItem;
         private ToolStripMenuItem saveCurrentToolStripMenuItem;
         private ToolStripMenuItem saveBackupToolStripMenuItem;
-        private ToolStripMenuItem saveToSystemToolStripMenuItem;
         private OpenFileDialog openFileDialog1;
         private SaveFileDialog saveFileDialog1;
         private TabControl tabControl2;
@@ -1368,5 +1374,6 @@
         private Button searchButton;
         private Label label8;
         private Button allocatePalletToSlotButton;
+        private LinkLabel viewDevelopersSiteLinkLabel;
     }
 }

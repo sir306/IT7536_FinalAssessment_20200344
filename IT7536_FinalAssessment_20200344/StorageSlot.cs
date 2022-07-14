@@ -11,8 +11,6 @@ namespace IT7536_FinalAssessment_20200344
     /// </summary>
     internal class StorageSlot : StorageRack
     {
-        //TODO SET MIN HEIGHT ON RACK HEIGHT
-
         /// <summary>
         /// Private, Protected and Public variables for this Object - see constructor for more information on these variables
         /// </summary>
