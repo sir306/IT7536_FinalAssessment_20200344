@@ -242,6 +242,12 @@ namespace IT7536_FinalAssessment_20200344
 
         }
 
+
+        /// <summary>
+        /// opens a browser to my website 
+        /// </summary>
+        /// <param name="sender">the object calling this</param>
+        /// <param name="e">the event triggering this</param>
         private void viewDevelopersSiteLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
@@ -293,12 +299,18 @@ namespace IT7536_FinalAssessment_20200344
             }
         }
 
+        /// <summary>
+        /// The save back up file tool strip allows a user to back up a copy of the file that belongs to the currently opened tab
+        /// </summary>
+        /// <param name="sender">the object that called the method</param>
+        /// <param name="e">the event that fired the method</param>
         private void SaveBackupToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            // give the warning to user on how this save works
             MessageBox.Show("Warning this is to save a backup of the currently selected tab i.e. if you are in the Storage Rack tab you will back up the storage rack csv file", "WARNING");
             
-            if (tabControl1.SelectedIndex == 0)
+            // work out which tab is open
+            if (tabControl1.SelectedIndex == 0) // product type
             {
                 saveFileDialog1.Filter = "Text file (*.txt)|*.txt";
                 saveFileDialog1.FileName = "productType";
@@ -312,7 +324,7 @@ namespace IT7536_FinalAssessment_20200344
                     }
                 }
             }
-            if (tabControl1.SelectedIndex == 1)
+            if (tabControl1.SelectedIndex == 1)// product pallet
             {
                 saveFileDialog1.Filter = "CSV file (.csv)|.csv";
                 saveFileDialog1.FileName = "productPallet";
@@ -326,7 +338,7 @@ namespace IT7536_FinalAssessment_20200344
                     }
                 }
             }
-            if (tabControl1.SelectedIndex == 2)
+            if (tabControl1.SelectedIndex == 2)// storage rack
             {
                 saveFileDialog1.Filter = "CSV file (.csv)|.csv";
                 saveFileDialog1.FileName = "storageRack";
@@ -350,6 +362,7 @@ namespace IT7536_FinalAssessment_20200344
         /// <exception cref="Exception">Fires if creating new file path fails</exception>
         private void SaveFileToNewFileLocation(string newFilePath, string currentFilePath)
         {
+            // create new file
             fileStream = File.Create(newFilePath);
             fileStream.Close();
             string[] lines = File.ReadAllLines(currentFilePath);

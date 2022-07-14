@@ -12,8 +12,6 @@ namespace IT7536_FinalAssessment_20200344
     /// </summary>
     internal class StorageRack
     {
-        //TODO SET MIN HEIGHT ON RACK HEIGHT
-
         /// <summary>
         /// Private, Protected and Public variables for this Object - see constructor for more information on these variables
         /// </summary>
@@ -133,27 +131,6 @@ namespace IT7536_FinalAssessment_20200344
         {
             int totalSlots = VerticalSlots * HorizontalSlots;
             return totalSlots;
-        }
-
-        // TODO CREATE PUBLIC FUNCTION TO CALL TO GET NUMBER OF AVAILABLE SLOTS THAT HAVEN'T BEEN FILLED
-        public void NumberOfAvailableSlots()
-        {
-            throw new Exception("This Function has not been developed yet");
-        }
-        // TODO CREATE PUBLIC FUNCTION TO CALL TO GET FIRST AVAILABLE SLOT
-        public StorageSlot? GetFirstAvailableSlot()
-        {
-            throw new Exception("This Function has not been developed yet");
-        }
-        // TODO CREATE PUBLIC FUNCTION TO CALL TO GET FIRST SLOT THAT CAN FIT THE REQUESTED PALLET
-        public StorageSlot? GetAvailableStorageForPallet(double requestedAvailableHeight)
-        {
-            throw new Exception("This Function has not been developed yet");
-        }
-        // TODO CREATE FUNCTION TO UPDATE A SLOT WITH THE FILLED PALLET
-        public bool UpdateRackSlot(StorageSlot slot, ProductPallet pallet)
-        {
-            throw new Exception("This Function has not been developed yet");
         }
 
         public string AllocatedProductType { get => _allocatedProductType; set => _allocatedProductType = value; }

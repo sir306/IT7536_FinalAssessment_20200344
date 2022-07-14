@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace IT7536_FinalAssessment_20200344
 {
+    /// <summary>
+    /// this partial class is for creating the view storage rack page and filling the form in, it also has a method to clear the tab to defaults
+    /// these methods are used elsewhere such as the getallocated slots and clearviewstoragerack
+    /// </summary>
     public partial class Form1 : Form
     {
+        /// <summary>
+        /// This method is to clear the view storage tab as when pallets are added this data will now be incorrect or incomplete
+        /// </summary>
         private void ClearViewStorageRack()
         {
             // assign form values
@@ -22,6 +29,10 @@ namespace IT7536_FinalAssessment_20200344
             viewRackAllocatedSlotsDataGridView.Rows.Clear();
         }
 
+        /// <summary>
+        /// Create the view storage rack tab with the supplied storage rack
+        /// </summary>
+        /// <param name="storageRack"></param>
         private void CreateViewStorageRackPage(StorageRack storageRack)
         {
             if (storageRack == null) return; // this should only fire if the view button manages to send an empty rack object which it shouldn't
@@ -35,9 +46,12 @@ namespace IT7536_FinalAssessment_20200344
             viewRackVAllocationTextBox.Text = storageRack.VerticalSlots.ToString();
             viewRackHeightTextBox.Text = storageRack.RackHeight.ToString() + "cm";
 
+            // create the grid
             CreateViewStorageRackDataGrid(viewRackAllocatedSlotsDataGridView, false);
+            // does it have allocated slots - it should
             if (storageRack.AllocatedSlots != null)
             {
+                // loop through all the slots
                 foreach (var item in storageRack.AllocatedSlots)
                 {
                     List<ProductPallet>? slotsPallets = GetAllocatedSlotPallets(storageRack.Id, item.Id);
@@ -46,13 +60,20 @@ namespace IT7536_FinalAssessment_20200344
             }
         }
 
+        /// <summary>
+        /// Create the data grid on the view page and fill the form in with all the slots
+        /// </summary>
+        /// <param name="dataGridView">the grid that will hold the new data table</param>
+        /// <param name="includeRackID">A bool to include the rack id associated with slot or not</param>
         private void CreateViewStorageRackDataGrid(DataGridView dataGridView, bool includeRackID)
         {
+            // declare the combo box column
             DataGridViewComboBoxColumn comboBoxColumn = new DataGridViewComboBoxColumn();
-
+            // clear previous data
             dataGridView.Columns.Clear();
             dataGridView.Rows.Clear();
 
+            // create the column headers
             comboBoxColumn.HeaderText = "Allocated Pallets";
             comboBoxColumn.Name = "Allocated Pallets";
 
@@ -70,7 +91,7 @@ namespace IT7536_FinalAssessment_20200344
             dataGridView.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridView.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
 
-
+            // add the rack id if includeRackID is true
             if (includeRackID)
             {
                 palletSlotResultDataGridView.Columns.Add("Rack ID", "Rack ID");
@@ -78,6 +99,13 @@ namespace IT7536_FinalAssessment_20200344
             }
         }
 
+        /// <summary>
+        /// Create the the allocated slot row to go with the method CreateViewStorageRackDataGrid for the correct headings
+        /// </summary>
+        /// <param name="dataGridView">the datagrid being assigned this values to</param>
+        /// <param name="storageSlot">the slot for this particular row</param>
+        /// <param name="pallets">if there are pallets then pass them in a pallet list otherwise null if empty</param>
+        /// <param name="RackID">if rack id is provided then it will be added to the row other wise null</param>
         private void CreateAllocatedSlotRow(DataGridView dataGridView, StorageSlot storageSlot, List<ProductPallet>? pallets, int? RackID)
         {
             int rowId = dataGridView.Rows.Add(); // create new row and add it, store new row id
@@ -133,6 +161,12 @@ namespace IT7536_FinalAssessment_20200344
             }
         }
 
+        /// <summary>
+        /// This is to find any pallets that are linked to the provided slot id and rack id
+        /// </summary>
+        /// <param name="rackID">The id of the rack the parent to the slot</param>
+        /// <param name="slotID">the id of the slot the child of rack</param>
+        /// <returns>If allocated pallets exist and have been found they will return in a list otherwise returns an empty list</returns>
         private List<ProductPallet>? GetAllocatedSlotPallets(int rackID, int slotID)
         {
             List<ProductPallet>? allocatedPallets = new List<ProductPallet>();

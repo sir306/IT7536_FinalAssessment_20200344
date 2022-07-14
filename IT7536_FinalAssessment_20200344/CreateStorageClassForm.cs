@@ -9,19 +9,41 @@ namespace IT7536_FinalAssessment_20200344
 {
     partial class Form1 : Form
     {
+        /// <summary>
+        /// Const variable for create rack form for the location default
+        /// </summary>
         private const string _newRackLocationDefault = "Enter the Storage Rack's Location..";
+        /// <summary>
+        /// const variable for the create rack form for the product type default
+        /// </summary>
         private const string _newRackProductTypeDefault = "Select or Enter a new Product Type";
 
+        /// <summary>
+        /// This method fires whenever the horizontal or vertical allocation NumericUpDown changes and recaluclates the currently allocated slots
+        /// </summary>
+        /// <param name="sender">the object that called the method</param>
+        /// <param name="e">the event that fired the method</param>
         private void AllocationRecalculate(object sender, EventArgs e)
         {
+            if (newAllocatedStorageSlotsNumericUpDown.Maximum <= newHorizontalAllocationNumericUpDown.Value * newVerticalAllocationNumericUpDown.Value)
+            {
+                newAllocatedStorageSlotsNumericUpDown.Maximum = newHorizontalAllocationNumericUpDown.Value * newVerticalAllocationNumericUpDown.Value;
+            }
             newAllocatedStorageSlotsNumericUpDown.Value = newHorizontalAllocationNumericUpDown.Value * newVerticalAllocationNumericUpDown.Value;
         }
 
+        /// <summary>
+        /// This method fires when a user attempts to create a new storage rack it will attempt to check all the  inputs are valid 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CreateNewStorageRackButton_Click(object sender, EventArgs e)
         {
+            // validate form
             bool validated = ValidateStorageForm();
             if (validated)
             {
+                // declare temp variables to hold form data
                 int id;
                 List<StorageSlot>? allocatedSlots = new();
                 string locatation;
@@ -31,6 +53,7 @@ namespace IT7536_FinalAssessment_20200344
                 string allocatedProductType;
                 double rackHeight;
 
+                // allocate form data to variables
                 id = int.Parse(newStorageRackIDTextBox.Text);
 
                 locatation = newStorageRackLocationTextBox.Text;
@@ -49,6 +72,7 @@ namespace IT7536_FinalAssessment_20200344
                         MessageBox.Show("There appears to have been an error when creating the allocated slots please try again", "Unexpected Error");
                         return;
                     }
+                    // create storage obj to pass to save storage rack and add it to the grid and storageRacks
                     var storageRack = StorageRack.CreateStorage(id,
                                                             allocatedSlots,
                                                             locatation,
@@ -66,6 +90,11 @@ namespace IT7536_FinalAssessment_20200344
             }
         }
 
+        /// <summary>
+        /// Clear the storage rack create form and set to defaults
+        /// </summary>
+        /// <param name="sender">the object that called the method</param>
+        /// <param name="e">the event that fired the method</param>
         private void ClearNewStorageRackButton_Click(object sender, EventArgs e)
         {
             string racksLocation = "Enter the Storage Rack's Location..";
@@ -76,11 +105,6 @@ namespace IT7536_FinalAssessment_20200344
             newStorageRackProductTypecomboBox.SelectedIndex = -1;
             newStorageRackProductTypecomboBox.Text = rackProductType;
             newRackHeightNumericUpDown.Value = (decimal)_rackMinHeight;
-        }
-
-        private void NewStorageRackHelpLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-
         }
 
         /// <summary>
@@ -131,6 +155,12 @@ namespace IT7536_FinalAssessment_20200344
             return true;
         }
 
+        /// <summary>
+        /// Save the new storage rack and the associated slot id to the file
+        /// </summary>
+        /// <param name="storageRack">the storage rack being saved</param>
+        /// <param name="storageRackSlotsId">the id associated to the slot id so it can found when file is loaded</param>
+        /// <exception cref="Exception">if file fails to load then theprogram will throw an error</exception>
         private void SaveStorageRack(StorageRack storageRack, int storageRackSlotsId)
         {
             string newline = $"{storageRack.Id},{storageRackSlotsId},{storageRack.Location},{storageRack.HorizontalSlots},{storageRack.VerticalSlots},{storageRack.Full},{storageRack.AllocatedProductType},{storageRack.RackHeight}";

@@ -17,6 +17,7 @@ namespace IT7536_FinalAssessment_20200344
         {
             if (palletSlotResultDataGridView.SelectedCells.Count > 0)
             {
+                // Get the selected rack to alloacte to
                 int selectedRow = palletSlotResultDataGridView.SelectedCells[0].RowIndex;
                 palletSlotResultDataGridView.Rows[selectedRow].Selected = true;
                 int rackId = (int)palletSlotResultDataGridView.SelectedRows[0].Cells[5].Value;
@@ -72,6 +73,7 @@ namespace IT7536_FinalAssessment_20200344
         {
             if (palletBeingAllocatedDataGridView.SelectedCells.Count > 0)
             {
+                // get currently selected pallet information
                 palletBeingAllocatedDataGridView.SelectAll();
                 int id = (int)palletBeingAllocatedDataGridView.SelectedCells[0].Value;
                 string storageLocation = (string)palletBeingAllocatedDataGridView.SelectedCells[1].Value;

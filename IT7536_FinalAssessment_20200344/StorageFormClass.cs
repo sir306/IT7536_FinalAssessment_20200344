@@ -16,6 +16,11 @@ namespace IT7536_FinalAssessment_20200344
         private double _rackMinHeight = 100.0; // for this the rack will be set to a minimum of 100cm/1m
         private int _newStorageRackID = 1;// This holds current new rack id its used for creating new racks
 
+        /// <summary>
+        /// This is usef for reading the Storage rack file and loading it into the app
+        /// </summary>
+        /// <param name="filepath">the target destination of the storage rack file</param>
+        /// <exception cref="Exception">If this fires it is due to incompatible files or errors opening them</exception>
         private void ReadStorageRackFile(string filepath)
         {
             csvTextFieldParser = new TextFieldParser(filepath);
@@ -304,6 +309,11 @@ namespace IT7536_FinalAssessment_20200344
             }
         }
 
+        /// <summary>
+        /// This will load the selected rack to the view storage tab and create the allocated slot data grid asociated with that rack
+        /// </summary>
+        /// <param name="sender">the object that called the method</param>
+        /// <param name="e">the event that fired the method</param>
         private void ViewRackButton_Click(object sender, EventArgs e)
         {
             if (currentStorageRackDataGridView.SelectedCells.Count > 0) // if a cell is selected then a row can be or is selected and data exists
@@ -315,6 +325,11 @@ namespace IT7536_FinalAssessment_20200344
 
         }
 
+        /// <summary>
+        /// This method will delete the storage rack selected provided that no pallets are allocated to it
+        /// </summary>
+        /// <param name="storageRack">The rack marked for deletion</param>
+        /// <exception cref="Exception">Fires when a file can't open or is in the incorrect format</exception>
         private void DeleteStorageRack(StorageRack storageRack)
         {
             string? tempFile = Path.GetTempFileName(); // create temp file

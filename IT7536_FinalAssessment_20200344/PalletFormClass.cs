@@ -182,7 +182,7 @@ namespace IT7536_FinalAssessment_20200344
             // clear old data out
             palletSlotResultDataGridView.Rows.Clear();
             palletSlotResultDataGridView.Columns.Clear();
-
+            // Is it in the allocated pallets?
             if (allocatedPalletsDataGridView.SelectedRows.Count > 0)
             {
                 List<ProductPallet> pallet = new();
@@ -195,6 +195,7 @@ namespace IT7536_FinalAssessment_20200344
                 CreatePalletDataGrid(palletBeingAllocatedDataGridView, pallet);
                 tabControl2.SelectedIndex = 2;
             }
+            // is it in the non allocated pallets
             else if (nonAllocatedPalletsDataGridView.SelectedRows.Count > 0)
             {
                 List<ProductPallet> pallet = new();
@@ -207,6 +208,7 @@ namespace IT7536_FinalAssessment_20200344
                 CreatePalletDataGrid(palletBeingAllocatedDataGridView, pallet);
                 tabControl2.SelectedIndex = 2;
             }
+            // not located at all
             else
             {
                 string message = "You need to select a pallet before you can move it";

@@ -9,8 +9,19 @@ namespace IT7536_FinalAssessment_20200344
 {
     partial class Form1 : Form
     {
+        /// <summary>
+        /// holds the new slot id for when a new slot is created
+        /// </summary>
         private int _newSlotID = 0;
 
+        /// <summary>
+        /// Creates a new storage slots for the storage racks' allocated slots
+        /// </summary>
+        /// <param name="amount">how many slots are being made</param>
+        /// <param name="height">how high are these slots</param>
+        /// <param name="location">where the rack is located</param>
+        /// <param name="productType">the product type allocated to the slot</param>
+        /// <returns>The id of the new slotId for that row of slots in the slot file</returns>
         private int CreateStorageSlots(int amount, double height, string location, string productType)
         {
             int slotID = -1;
@@ -41,6 +52,11 @@ namespace IT7536_FinalAssessment_20200344
             return slotID;
         }
 
+        /// <summary>
+        /// this saves the new storage slot to file
+        /// </summary>
+        /// <param name="storageSlot">the slot being saved</param>
+        /// <exception cref="Exception">If file can't be open it will crash</exception>
         private void CommitNewSlotsToFile(StorageSlot storageSlot)
         {
             TextFieldParser textFieldParser = new TextFieldParser(path + _slots);
@@ -55,10 +71,10 @@ namespace IT7536_FinalAssessment_20200344
             string? tempFile = Path.GetTempFileName(); // create temp file
             StreamWriter streamWriter = new StreamWriter(tempFile); // create steamwriter for temp file
 
-            while(!textFieldParser.EndOfData)
+            while (!textFieldParser.EndOfData)
             {
                 string? line = textFieldParser.ReadLine();// read and create line
-                if(line != null)
+                if (line != null)
                 {
                     streamWriter.WriteLine(line);
                 }
@@ -74,6 +90,13 @@ namespace IT7536_FinalAssessment_20200344
             File.Move(tempFile, path + _slots);
         }
 
+        /// <summary>
+        /// This will save the slots as whole list of slot ids related to a particular rack it 
+        /// basically bridges the storage rack file and the slot file together
+        /// </summary>
+        /// <param name="slotList">The list of slot ids being saved in a line</param>
+        /// <returns>return the id value of that list of slots</returns>
+        /// <exception cref="Exception">if the file can't be opened an error will be thrown</exception>
         private int SaveSlotList(List<int> slotList)
         {
             int slotID = 1;
@@ -81,7 +104,7 @@ namespace IT7536_FinalAssessment_20200344
             string insertLine = "";
             int i = 0;
             // loop through list to create insert string
-            while(i < slotList.Count)
+            while (i < slotList.Count)
             {
                 // add slot id
                 insertLine += slotList[i].ToString();
@@ -114,7 +137,7 @@ namespace IT7536_FinalAssessment_20200344
                 }
             }
             // create final of the insert line
-            insertLine = $"{slotID},{insertLine}"; 
+            insertLine = $"{slotID},{insertLine}";
             // insert new line
             streamWriter.Write(insertLine);
             // closer parser and writer
@@ -156,7 +179,7 @@ namespace IT7536_FinalAssessment_20200344
                 if (values != null) // holds data
                 {
                     // update new slot id
-                    if(_newSlotID <= int.Parse(values[0]))
+                    if (_newSlotID <= int.Parse(values[0]))
                     {
                         _newSlotID = int.Parse(values[0]) + 1;
                     }
